@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Category from "./Category"
 import axios from "axios"
 import CategoryFoods from "./Category-Food-List"
-
+import { useQueryState } from 'nuqs'
 type category ={
     title :string,
     foods : Array<food>
@@ -16,8 +16,9 @@ type food = {
     price : string
 }
 
-const MenuContainer = () => {
-    const [categories, setCategory] = useState<category[]>([])
+const MenuContainerCategory = () => {
+    const [category] = useQueryState("category")
+    const [categories, setCategories] = useState<category[]>([])
     useEffect(()=>{
         const fetchFoodByCategory = async () => {
             try{
@@ -25,7 +26,7 @@ const MenuContainer = () => {
                 console.log(response);
                 
                 if(Array.isArray(response.data)){
-                    setCategory(response.data)
+                    setCategories(response.data)
                 }
             }catch(err){
                 console.log(err);
@@ -34,17 +35,17 @@ const MenuContainer = () => {
         }
         fetchFoodByCategory()
     },[])
+   
+    
     return(
         <div className="w-screen h-fit flex dark:text-white justify-center">
-            <div className="max-w-[1264px] w-full h-fit flex flex-col gap-8">
+            <div className="max-w-[1264px] w-full h-fit flex flex-col gap-8 mt-[100px]">
                 <Category categories={categories} />
                  <div className="flex flex-col w-full gap-6 pb-10">
-                    {categories.map((category, index)=>(
-                        <CategoryFoods key={index} category={category.title}/>
-                    ))}
+                        <CategoryFoods category={category}/>
                  </div>
             </div>
         </div>
     )
 }
-export default MenuContainer
+export default MenuContainerCategory

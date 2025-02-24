@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useRouter } from "next/navigation";
 type Props = {
   categories : category[]
 }
@@ -13,15 +14,15 @@ type category = {
   title : string
 }
 const Category = ({categories}:Props) => {
-  console.log(categories);
+  const router = useRouter()
   
   return (
-    <div className="flex flex-col w-full">
-      <p>Categories</p>
+    <div className="flex flex-col gap-9 w-full">
+      <p className="text-2xl font-semibold">Categories</p>
       <Carousel>
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="gap-[10px] ml-4">
           {categories.map((category:category, index)=>(
-            <CarouselItem className="pl-4 basis-1/10" key={index}>{category.title}</CarouselItem>
+            <CarouselItem onClick={()=>router.push(`/category?category=${category.title}`)} className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full" key={index}>{category.title}</CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>

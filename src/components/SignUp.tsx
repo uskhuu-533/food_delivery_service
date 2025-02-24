@@ -46,7 +46,7 @@ const SignUP = () => {
   
 
   return (
-    <div className="w-[40%] flex items-center justify-center">
+    <div className="w-[40%] flex items-center dark:text-white justify-center">
       <div className="w-[80%] flex flex-col h-fit gap-6">
         {step === 1 ? (
           <Email user={user} setUser={setUser} setStep={setStep} />

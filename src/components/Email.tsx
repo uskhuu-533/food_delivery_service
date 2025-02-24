@@ -17,8 +17,8 @@ const Email = ({ setStep, setUser, user }: props) => {
   const [isEmailInvaild, setInvaild] = useState(false);
 
   const jumpToPassword = () => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\s.[a-zA-Z]{2,}$/;
-    if ((user.email)) {
+    const regex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+    if ((regex.test(user.email))) {
       setStep(2);
     } else {
       setInvaild(true);
