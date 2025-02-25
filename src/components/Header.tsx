@@ -1,18 +1,14 @@
-
-import LogoCont from "./Logo-Cont"
-
-
+import CartUser from "./Cart-User-Loc";
+import LogoCont from "./Logo-Cont";
 
 const Header = () => {
-
-    return(
-        <div className="w-screen fixed h-[88px] fixed items-center bg-white justify-center py-[22px] dark:bg-[#18181B] z-10">
-            <div className="h-full max-w-[1264px] w-full justify-between">
-            <LogoCont />
-            </div>
-            <div>
-            </div>
-        </div>
-    )
-}
-export default Header
+  return (
+    <div className="w-screen fixed h-[68px] py-[12px] px-[88px] fixed items-center bg-white justify-center py-[12px] dark:bg-[#18181B] z-10">
+      <div className="h-full w-full w-full flex justify-between">
+        <LogoCont />
+        <CartUser />
+      </div>
+    </div>
+  );
+};
+export default Header;

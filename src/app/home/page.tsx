@@ -8,8 +8,8 @@ const Home = () => {
     return(
         <div className="">
             <Header/>
-            <div className="flex w-full dark:text-white max-h-[800px] h-[800px] relative overflow-hidden">
-             <img className="w-full h-auto absolute mt-[80px]" src={`/mainbg.jpg`} alt="home"/>
+            <div className="flex w-full max-h-[800px] h-fit relative overflow-hidden">
+             <img className="w-full h-auto  lg:mt-0 mt-12" src={`/mainbg.jpg`} alt="home"/>
              </div>
              <MenuContainer />
         </div>

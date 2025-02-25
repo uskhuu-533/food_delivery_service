@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Email from "./Email";
 import Password from "./Password";
+import axios from "axios";
+import { AxiosError } from 'axios';
 type User = {
   email: string;
   password: string;
@@ -10,37 +12,31 @@ type User = {
 const SignUP = () => {
   const router = useRouter();
   const [step, setStep] = useState<number>(1);
-  const [user, setUser] = useState<User>({ email: "", password:"" });
+  const [newUser, setUser] = useState<User>({ email: "", password:"" });
+  const [error, setError] = useState<unknown>()
   const goLoginPage = () => {
     router.push("/login");
   };
 
-  console.log(user);
+  console.log(newUser);
 
+
+
+  // In your component:
   const postUser = async () => {
-
     try {
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      const text = await response.text();
-      console.log("Response status:", response.status);
-      console.log("Response text:", text);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      const response = await axios.post("http://localhost:3000/users", newUser);
+      console.log(response);
+      router.push('/login')
     } catch (err) {
       console.error("Error posting user:", err);
-    }finally{
-      router.push(`/login`)
+      const error = err as AxiosError;
+      if (error.response) {
+        setError(error.response.data);
+      } else {
+        setError(undefined);
+      }
     }
-
   };
 
   
@@ -49,10 +45,10 @@ const SignUP = () => {
     <div className="w-[40%] flex items-center dark:text-white justify-center">
       <div className="w-[80%] flex flex-col h-fit gap-6">
         {step === 1 ? (
-          <Email user={user} setUser={setUser} setStep={setStep} />
+          <Email user={newUser} setUser={setUser} setStep={setStep} />
         ) : (
           <Password
-            user={user}
+            user={newUser}
             setUser={setUser}
             setStep={setStep}
             postUser={postUser}

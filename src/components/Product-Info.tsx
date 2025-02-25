@@ -11,7 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Minus, Plus } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 
 type Props = {
