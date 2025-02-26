@@ -35,9 +35,11 @@ const Login = () => {
         const text = await response.text();
         console.log("Response status:", response.status);
         console.log("Response text:", text);
-       if(text == "Signed in successfully"){
-        router.push("/home")
-       }
+   if (response.ok) {
+    localStorage.clear()
+    localStorage.setItem("user", text)
+    router.push('/home')
+   }
       } catch (err) {
         console.error("Error posting user:", err);
       }

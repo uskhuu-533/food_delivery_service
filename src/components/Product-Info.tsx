@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import axios from "axios";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -21,9 +22,29 @@ type food = {
   food_name: string;
   food_description: string;
   price: string;
+  _id: string;
 };
 export function ProductInfo({ food }: Props) {
   const [count, setCount] = useState(1);
+  const addToCart = async () => {
+    try {
+      const token = localStorage.getItem("user");
+      const response = axios.post(
+        `http://localhost:3000/foodorderitems/${food._id}`,
+        {count: count},
+        {
+          headers: {
+            Authorization: `${token}`,
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const totalPrice = parseInt(food.price) * count;
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -54,27 +75,37 @@ export function ProductInfo({ food }: Props) {
               <div className="w-full justify-between flex">
                 <div className="">
                   <p className="text-md">Total price</p>
-                  <p className="text-2xl font-bold">${parseInt(food.price) * count}</p>
+                  <p className="text-2xl font-bold">${totalPrice}</p>
                 </div>
                 <div className="flex gap-2">
-                  <button className="border rounded-full px-4" onClick={() => setCount(count - 1)}>
-                    <Minus size={12}/>
+                  <button
+                    className="border rounded-full px-4"
+                    onClick={() => setCount(count - 1)}
+                  >
+                    <Minus size={12} />
                   </button>
-                  <div className="rounded-full border  py-[2px] px-4 items-center flex">{count}</div>
-                  <button className="border rounded-full  py-[2px] px-4" onClick={() => setCount(count + 1)}>
-                    <Plus size={12}/>
+                  <div className="rounded-full border  py-[2px] px-4 items-center flex">
+                    {count}
+                  </div>
+                  <button
+                    className="border rounded-full  py-[2px] px-4"
+                    onClick={() => setCount(count + 1)}
+                  >
+                    <Plus size={12} />
                   </button>
                 </div>
               </div>
-              <Button className="w-full rounded-full" type="submit">
-            Add to cart
-          </Button>
+              <Button
+                className="w-full rounded-full"
+                type="submit"
+                onClick={addToCart}
+              >
+                Add to cart
+              </Button>
             </div>
           </div>
         </div>
-        <DialogFooter className="w-[50%]">
-         
-        </DialogFooter>
+        <DialogFooter className="w-[50%]"></DialogFooter>
       </DialogContent>
     </Dialog>
   );
