@@ -12,7 +12,7 @@ const CartDetail = () => {
       const token = localStorage.getItem("user");
       console.log(token);
 
-      const response = axios.post(
+      const response =await axios.post(
         `http://localhost:3000/foodorder`,
         {foodOrderItems : cartFood},
         {
@@ -21,33 +21,44 @@ const CartDetail = () => {
           },
         }
       );
+      const deleteRes =await axios.delete(
+        `http://localhost:3000/foodorderitems`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       console.log(response);
+      console.log(deleteRes);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getCartItems = async () => {
+    const token = localStorage.getItem("user");
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/foodorderitems`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      
+      setCartFood(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    const getCartItems = async () => {
-      const token = localStorage.getItem("user");
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/foodorderitems`,
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        );
 
-        setCartFood(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getCartItems();
   }, []);
   
-  console.log(cartFood);
   return (
     <div className="w-full h-full flex flex-col gap-6">
       <div className="p-4 w-full rounded-xl h-[60%] bg-[#FFFFFF] flex flex-col gap-5 overflow-scroll">
@@ -62,7 +73,7 @@ const CartDetail = () => {
             </div>
           </div>
         ) : (
-          cartFood.map((food, index) => <CartItem key={index} foods={food} />)
+          cartFood.map((food, index) => <CartItem key={index} foods={food} getCartItems={getCartItems}/>)
         )}
         <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
           Add foods

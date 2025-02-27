@@ -19,6 +19,7 @@ type food = {
   food_name: string;
   food_description: string;
   price: string;
+  _id : string
 };
 
 const CategoryFoods = ({ category, categoryTitle }: Props) => {

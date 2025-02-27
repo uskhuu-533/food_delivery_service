@@ -1,8 +1,5 @@
-'use client'
-
 import Header from "@/components/Header"
 import MenuContainer from "@/components/Menu-Container"
-
 
 const Home = () => {
     return(

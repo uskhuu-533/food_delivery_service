@@ -29,7 +29,7 @@ export function ProductInfo({ food }: Props) {
   const addToCart = async () => {
     try {
       const token = localStorage.getItem("user");
-      const response = axios.post(
+      const response =await axios.post(
         `http://localhost:3000/foodorderitems/${food._id}`,
         {count: count},
         {

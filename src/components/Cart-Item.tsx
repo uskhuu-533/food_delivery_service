@@ -1,25 +1,34 @@
 'use client'
 
 import axios from "axios";
-import { X } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type Props = {
-    foods : foods
+    foods : foods,
+    getCartItems :Function
 }
 type food = {
-    food_image: string;
+    food_image: string | undefined;
     food_name: string;
     food_description: string;
-    price: string;
+    price: number;
     _id: string;
   };
 type foods = {
     food : string
-    count : number
+    quantity : number,
+    _id : string
 }
-const CartItem = ({foods}:Props) => {
-    const [foodDetail, setFoodDetail] = useState<food>()
+const CartItem = ({foods, getCartItems}:Props) => {
+    const [foodDetail, setFoodDetail] = useState<food>({
+      food_image: undefined,
+      food_name: '',
+      food_description: '',
+      price: 0,
+      _id: ""
+    })
+    
     const getFood = async () => {
         try {
           const response =await axios.get(
@@ -33,6 +42,29 @@ const CartItem = ({foods}:Props) => {
       useEffect(()=>{
         getFood()
       },[])
+      const plusItem = async () => {
+        try {
+          const response =await axios.put(`http://localhost:3000/foodorderitems/${foods._id}`, {count : 1})
+
+          getCartItems()
+        } catch (error) {
+          console.log(error);
+          
+        }
+      }
+      const minusItem = async () => {
+        if (foods.quantity <= 0) return
+        try {
+          const response =await axios.put(`http://localhost:3000/foodorderitems/${foods._id}`, {count : -1}
+          )
+     
+          getCartItems()
+          
+        } catch (error) {
+          console.log(error);
+          
+        }
+      }
     return(
         <div className="w-full h-[120px] flex gap-[10px]">
               <div className="w-[124px] h-full relative rounded-md overflow-hidden">
@@ -46,7 +78,14 @@ const CartItem = ({foods}:Props) => {
                         </div>
                         <button className="w-9 h-9 items-center flex justify-center border=[#EF4444] border rounded-full"><X stroke="#EF4444" size={16}/></button>
                     </div>
-                    <div className="justify-between w-full"></div>
+                    <div className="justify-between flex w-full">
+                      <div className="flex"> 
+                        <Minus onClick={minusItem}/>
+                        <div>{foods.quantity}</div>
+                        <Plus onClick={plusItem}/>
+                      </div>
+                      <div>${foods.quantity*foodDetail?.price}</div>
+                    </div>
                 </div>
             </div>
     )
