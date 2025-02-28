@@ -1,8 +1,9 @@
 "use client";
 
+import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 type form = {
   email: string;
   password: string;
@@ -52,6 +53,27 @@ const Login = () => {
       setInvaild(true);
     }
   };
+  useEffect(() => {
+    const getEmail = async () => {
+      const token = localStorage.getItem("user");
+      if (!token) {
+        router.push("/login");
+      }
+      try {
+        const response = await axios.get("http://localhost:3000/users", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        if (response.statusText == "OK") {
+          router.push("/home");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getEmail();
+  }, []);
   return (
     <div className="w-[40%] flex items-center justify-center">
       <div className="w-[80%] flex flex-col h-fit gap-6">

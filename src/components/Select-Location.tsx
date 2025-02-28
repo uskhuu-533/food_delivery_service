@@ -10,46 +10,71 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ChevronRight, MapPin} from "lucide-react";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const formSchema = z.object({
-  address: z.string().min(0, {
-    message: "Address must be at least 2 characters.",
-  }),
-});
+import { ChevronRight, MapPin, X } from "lucide-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const SelectLocation = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      address: "",
-    },
-  });
+  const [location, setLocation] = useState("");
+  const [address, setAddress] = useState(null);
+  const onSubmit = async () => {
+    const token = localStorage.getItem("user");
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users`,
+        { address: location },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
+  const handleChangeValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setLocation(value);
+  };
+  useEffect(() => {
+    const getAddress = async () => {
+      const token = localStorage.getItem("user");
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/users/address`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setAddress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAddress();
+  }, []);
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center">
           <MapPin stroke="#EF4444" size={20} />
-          <div className="text-[#EF4444]">Delivery address</div>
-          <div className="text-[#18181B80] ">Add location</div>
-          <ChevronRight stroke="#18181B80" />
+          {!address ? (
+            <>
+              <div className="text-[#EF4444]">Delivery address</div>
+              <div className="text-[#18181B80] ">Add location</div>
+              <ChevronRight stroke="#18181B80" />
+            </>
+          ) : (
+            <div className="flex items-center gap-10 max-w-[200px]">
+              <p className="text-black">{address}</p>
+              <X stroke="black" size={20}/>
+            </div>
+          )}
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -58,31 +83,19 @@ const SelectLocation = () => {
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel></FormLabel>
-                    <FormControl>
-                      <input
-                        placeholder="Please provide specific address details such as building number, entrance, and apartment number"
-                        {...field}
-                        className="bg-[#FFFFFF] py-2 border flex items-start w-full rounded-md h-[100px]"
-                      />
-                    </FormControl>
-                    <FormDescription></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
+          <textarea
+            placeholder="Please provide specific address details such as building number, entrance, and apartment number"
+            className="bg-[#FFFFFF] border w-full rounded-md h-full h-[100px]"
+            rows={5}
+            onChange={(e) => handleChangeValue(e)}
+          ></textarea>
         </div>
-        <DialogFooter></DialogFooter>
+        <DialogFooter>
+          <Button className="bg-[none] border text-black">cancel</Button>
+          <Button type="submit" onClick={onSubmit}>
+            Deliver here
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

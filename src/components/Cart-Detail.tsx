@@ -4,61 +4,32 @@ import axios from "axios";
 import Logo from "./icons/Logo";
 import { useEffect, useState } from "react";
 import CartItem from "./Cart-Item";
+import AddOrder from "./Add-Order";
 
 const CartDetail = () => {
   const [cartFood, setCartFood] = useState([]);
-  const addToOrder = async () => {
-    try {
-      const token = localStorage.getItem("user");
-      console.log(token);
-
-      const response =await axios.post(
-        `http://localhost:3000/foodorder`,
-        {foodOrderItems : cartFood},
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-      const deleteRes =await axios.delete(
-        `http://localhost:3000/foodorderitems`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
-      console.log(response);
-      console.log(deleteRes);
-      
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [itmesPrice, setItmesPrice] = useState<number>(0);
   const getCartItems = async () => {
     const token = localStorage.getItem("user");
     try {
-      const response = await axios.get(
-        `http://localhost:3000/foodorderitems`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`http://localhost:3000/foodorderitems`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
       console.log(response.data);
-      
+
       setCartFood(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-
     getCartItems();
   }, []);
   
+
+  const totalPrice = itmesPrice + 0.99;
   return (
     <div className="w-full h-full flex flex-col gap-6">
       <div className="p-4 w-full rounded-xl h-[60%] bg-[#FFFFFF] flex flex-col gap-5 overflow-scroll">
@@ -73,7 +44,13 @@ const CartDetail = () => {
             </div>
           </div>
         ) : (
-          cartFood.map((food, index) => <CartItem key={index} foods={food} getCartItems={getCartItems}/>)
+          cartFood.map((item, index) => (
+            <CartItem
+              key={index}
+              item={item}
+              getCartItems={getCartItems}
+            />
+          ))
         )}
         <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
           Add foods
@@ -84,23 +61,18 @@ const CartDetail = () => {
         <div className="text-[#71717A]">
           <div className="flex justify-between">
             <p>Items</p>
-            <p>-</p>
+            <p>{}</p>
           </div>
           <div className="flex justify-between">
             <p>Shipping</p>
-            <p>-</p>
+            <p>0.99</p>
           </div>
         </div>
         <div className="flex justify-between text-[#71717A]">
           <p>Total</p>
-          <p>-</p>
+          <p>{totalPrice}</p>
         </div>
-        <button
-          className="w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF]"
-          onClick={addToOrder}
-        >
-          Check out
-        </button>
+       <AddOrder getCartItems={getCartItems} cartFood={cartFood}/>
       </div>
     </div>
   );

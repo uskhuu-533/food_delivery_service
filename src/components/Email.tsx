@@ -1,24 +1,26 @@
 "use client";
 
+import axios from "axios";
 import { ChevronLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 type props = {
   setStep: (_step: number) => void;
-  setUser :(_user:User) => void,
-  user:User
+  setUser: (_user: User) => void;
+  user: User;
 };
 type User = {
-  email:string,
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 const Email = ({ setStep, setUser, user }: props) => {
-  const [emailValue, setEmailValue] = useState<string>("");
   const [isEmailInvaild, setInvaild] = useState(false);
+  const router = useRouter();
 
   const jumpToPassword = () => {
     const regex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
-    if ((regex.test(user.email))) {
+    if (regex.test(user.email)) {
       setStep(2);
     } else {
       setInvaild(true);
@@ -27,23 +29,30 @@ const Email = ({ setStep, setUser, user }: props) => {
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInvaild(false);
-    setUser({...user ,email:value})
+    setUser({ ...user, email: value });
   };
-  
-  useEffect(() => {
-  
 
-    const fetchusers = async () => {
+  useEffect(() => {
+    const getEmail = async () => {
+      const token = localStorage.getItem("user");
+      if (!token) {
+        router.push("/login");
+      }
       try {
-        const response = await fetch(`http://localhost:3000/users`);
-        const results = await response.json();
-        console.log(results);
-      } catch (err) {
-        console.log(err);
+        const response = await axios.get("http://localhost:3000/users", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        if (response.statusText == "OK") {
+          router.push("/home");
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
-    // fetchusers();
-  });
+    getEmail();
+  }, []);
 
   return (
     <>

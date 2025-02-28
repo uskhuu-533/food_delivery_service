@@ -45,6 +45,10 @@ export function ProductInfo({ food }: Props) {
     }
   };
   const totalPrice = parseInt(food.price) * count;
+  const minusItem = () => {
+    if (count<=1) return
+    setCount((prev)=> prev-1) 
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -79,8 +83,13 @@ export function ProductInfo({ food }: Props) {
                 </div>
                 <div className="flex gap-2">
                   <button
-                    className="border rounded-full px-4"
-                    onClick={() => setCount(count - 1)}
+                    onClick={minusItem}
+                    className={`border rounded-full px-4 ${
+                      count <= 1
+                        ? "text-gray-300 cursor-not-allowed"
+                        : "hover:bg-gray-100"
+                    }`}
+                    disabled={count <= 1}
                   >
                     <Minus size={12} />
                   </button>
@@ -89,7 +98,7 @@ export function ProductInfo({ food }: Props) {
                   </div>
                   <button
                     className="border rounded-full  py-[2px] px-4"
-                    onClick={() => setCount(count + 1)}
+                    onClick={() => setCount((prev)=>prev+1)}
                   >
                     <Plus size={12} />
                   </button>

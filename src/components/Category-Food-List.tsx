@@ -38,13 +38,7 @@ const CategoryFoods = ({ category, categoryTitle }: Props) => {
   useEffect(() => {
     getFood();
   }, [categoryId]);
-  const addToCart = async () => {
-    try {
-      const response = await axios.post(``);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   return (
     <div className="w-full h-fit rounded-md  flex flex-col gap-3">
       <p className="text-2xl font-semibold">{categoryTitle}</p>
