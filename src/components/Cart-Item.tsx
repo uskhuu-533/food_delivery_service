@@ -7,7 +7,7 @@ import { useDebounce } from "use-debounce";
 
 type Props = {
   item: item;
-  getCartItems: Function;  
+  getCartItems: Function;
 };
 
 type food = {
@@ -24,8 +24,7 @@ type item = {
   _id: string;
 };
 
-const CartItem = ({ item, getCartItems}: Props) => {
-
+const CartItem = ({ item, getCartItems }: Props) => {
   const [foodDetail, setFoodDetail] = useState<food>({
     food_image: undefined,
     food_name: "",
@@ -43,7 +42,6 @@ const CartItem = ({ item, getCartItems}: Props) => {
         `http://localhost:3000/food/orderitem/${item.food}`
       );
       setFoodDetail(response.data);
-
     } catch (error) {
       console.log(error);
     }
@@ -61,24 +59,23 @@ const CartItem = ({ item, getCartItems}: Props) => {
     if (debouncedQuantity === item.quantity) return;
 
     const updateQuantity = async () => {
-      const delta : number = debouncedQuantity - item.quantity;
+      const delta: number = debouncedQuantity - item.quantity;
 
       if (delta === 0) return;
-
       try {
         await axios.put(`http://localhost:3000/foodorderitems/${item._id}`, {
           count: delta,
         });
+        
         getCartItems();
-
       } catch (error) {
         console.log(error);
         setLocalQuantity(item.quantity);
       }
     };
-    
+
     updateQuantity();
-  }, [debouncedQuantity, item._id, item.quantity, getCartItems]);
+  }, [debouncedQuantity, item._id, item.quantity]);
 
   const plusItem = () => {
     setLocalQuantity((prev) => prev + 1);
@@ -101,7 +98,7 @@ const CartItem = ({ item, getCartItems}: Props) => {
       console.log(error);
     }
   };
-const price = (localQuantity * (foodDetail?.price || 0)).toFixed(2)
+  const price = (localQuantity * (foodDetail?.price || 0)).toFixed(2);
 
   return (
     <div className="w-full h-[120px] flex gap-[10px]">

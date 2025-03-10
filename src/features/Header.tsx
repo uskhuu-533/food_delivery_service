@@ -1,5 +1,7 @@
-import CartUser from "./Cart-User-Loc";
-import LogoCont from "./Logo-Cont";
+import CartUser from "@/components/Cart-User-Loc";
+import LogoCont from "@/components/Logo-Cont";
+
+
 
 const Header = () => {
   return (

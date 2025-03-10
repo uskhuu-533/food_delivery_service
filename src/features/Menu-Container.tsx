@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Category from "./Category"
+import Category from "../components/Category"
 import axios from "axios"
-import CategoryFoods from "./Category-Food-List"
+import CategoryFoods from "../components/Category-Food-List"
 
 type category ={
     title :string,

@@ -3,8 +3,8 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import Email from "./Email";
-import Password from "./Password";
+import Email from "../components/Email";
+import Password from "../components/Password";
 import axios from "axios";
 import { AxiosError } from 'axios';
 type User = {

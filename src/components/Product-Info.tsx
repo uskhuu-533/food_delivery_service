@@ -26,7 +26,7 @@ type food = {
 };
 export function ProductInfo({ food }: Props) {
   const [count, setCount] = useState(1);
-  const addToCart = async () => {
+  const addToCart = async () => { 
     try {
       const token = localStorage.getItem("user");
       const response =await axios.post(

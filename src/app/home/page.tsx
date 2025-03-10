@@ -1,5 +1,7 @@
-import Header from "@/components/Header"
-import MenuContainer from "@/components/Menu-Container"
+import Header from "@/features/Header"
+import MenuContainer from "@/features/Menu-Container"
+
+
 
 const Home = () => {
     return(
@@ -8,7 +10,7 @@ const Home = () => {
             <div className="flex w-full max-h-[800px] h-fit relative overflow-hidden">
              <img className="w-full h-auto  lg:mt-0 mt-12" src={`/mainbg.jpg`} alt="home"/>
              </div>
-             <MenuContainer />
+             <MenuContainer/>
         </div>
     )
 }

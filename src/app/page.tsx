@@ -1,6 +1,6 @@
 "use client";
 
-import SignUP from "@/components/SignUp";
+import SignUP from "@/features/SignUp";
 import Image from "next/image";
 
 export default function Home() {

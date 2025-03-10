@@ -1,8 +1,8 @@
 "use client";
 
 import MenuContainerCategory from "@/components/CategoryPage";
-import Header from "@/components/Header";
-import MenuContainer from "@/components/Menu-Container";
+import Header from "@/features/Header";
+import MenuContainer from "@/features/Menu-Container";
 
 
 

@@ -1,6 +1,6 @@
 import {ShoppingCart, User } from "lucide-react"
 import SelectLocation from "./Select-Location"
-import OrderDetail from "./Order-Details"
+import OrderDetail from "../features/Order-Details"
 import UserDetail from "./User"
 
 const CartUser = () => {

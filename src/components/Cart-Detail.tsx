@@ -27,7 +27,6 @@ const CartDetail = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Fetch all cart items
   const getCartItems = async () => {
     const token = localStorage.getItem("user")
     setLoading(true);
@@ -39,7 +38,6 @@ const CartDetail = () => {
       });
       setCartItems(response.data);
       
-      // Fetch food details for all cart items
       await Promise.all(response.data.map((item: CartItemType) => getFoodDetail(item.food)));
       
       setLoading(false);
