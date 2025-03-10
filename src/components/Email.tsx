@@ -35,9 +35,6 @@ const Email = ({ setStep, setUser, user }: props) => {
   useEffect(() => {
     const getEmail = async () => {
       const token = localStorage.getItem("user");
-      if (!token) {
-        router.push("/login");
-      }
       try {
         const response = await axios.get("http://localhost:3000/users", {
           headers: {

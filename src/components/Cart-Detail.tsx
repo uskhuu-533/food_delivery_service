@@ -1,40 +1,90 @@
-"use client";
+'use client'
 
 import axios from "axios";
-import Logo from "./icons/Logo";
 import { useEffect, useState } from "react";
-import CartItem from "./Cart-Item";
+
 import AddOrder from "./Add-Order";
+import Logo from "./icons/Logo";
+import CartItem from "./Cart-Item";
+
+type CartItemType = {
+  food: string;
+  quantity: number;
+  _id: string;
+};
+
+type FoodDetail = {
+  food_image: string | undefined;
+  food_name: string;
+  food_description: string;
+  price: number;
+  _id: string;
+};
 
 const CartDetail = () => {
-  const [cartFood, setCartFood] = useState([]);
-  const [itmesPrice, setItmesPrice] = useState<number>(0);
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const [foodDetails, setFoodDetails] = useState<{[key: string]: FoodDetail}>({});
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch all cart items
   const getCartItems = async () => {
-    const token = localStorage.getItem("user");
+    const token = localStorage.getItem("user")
+    setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3000/foodorderitems`, {
         headers: {
           Authorization: `${token}`,
         },
       });
-      console.log(response.data);
+      setCartItems(response.data);
+      
+      // Fetch food details for all cart items
+      await Promise.all(response.data.map((item: CartItemType) => getFoodDetail(item.food)));
+      
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
-      setCartFood(response.data);
+  
+  const getFoodDetail = async (foodId: string) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/food/orderitem/${foodId}`
+      );
+      setFoodDetails(prev => ({
+        ...prev,
+        [foodId]: response.data
+      }));
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
+    if (Object.keys(foodDetails).length > 0 && cartItems.length > 0) {
+      const total = cartItems.reduce((sum, item) => {
+        const foodDetail = foodDetails[item.food];
+        return foodDetail ? sum + (foodDetail.price * item.quantity) : sum;
+      }, 0);
+      
+      setTotalPrice(total);
+    }
+  }, [cartItems, foodDetails]);
+
+  // Initial load
+  useEffect(() => {
     getCartItems();
   }, []);
   
 
-  const totalPrice = itmesPrice + 0.99;
   return (
-    <div className="w-full h-full flex flex-col gap-6">
+    <div className="w-full h-full flex flex-col gap-6 lg:gap-3 ">
       <div className="p-4 w-full rounded-xl h-[60%] bg-[#FFFFFF] flex flex-col gap-5 overflow-scroll">
-        <h1 className="font-bold text-xl">My cart</h1>
-        {cartFood.length === 0 ? (
+        <h1 className="font-bold text-xl lg:text-md">My cart</h1>
+        {cartItems.length === 0 ? (
           <div className="py-8 px-12 w-full flex flex-col items-center gap-1 bg-[#F4F4F5] rounded-md">
             <Logo />
             <div className="text-lg font-semibold">Your cart is empty</div>
@@ -44,7 +94,7 @@ const CartDetail = () => {
             </div>
           </div>
         ) : (
-          cartFood.map((item, index) => (
+          cartItems.map((item, index) => (
             <CartItem
               key={index}
               item={item}
@@ -56,12 +106,12 @@ const CartDetail = () => {
           Add foods
         </button>
       </div>
-      <div className="p-4 h-[30%] bg-[#FFFFFF] rounded-xl flex flex-col gap-5">
-        <h1 className="text-lg font-semibold">Payment info</h1>
-        <div className="text-[#71717A]">
+      <div className="p-4 h-[30%] bg-[#FFFFFF] rounded-xl flex flex-col gap-5 lg:gap-1">
+        <h1 className="text-lg font-semibold lg:text-md">Payment info</h1>
+        <div className="text-[#71717A] lg:text-sm">
           <div className="flex justify-between">
             <p>Items</p>
-            <p>{}</p>
+            <p>{totalPrice}</p>
           </div>
           <div className="flex justify-between">
             <p>Shipping</p>
@@ -70,9 +120,9 @@ const CartDetail = () => {
         </div>
         <div className="flex justify-between text-[#71717A]">
           <p>Total</p>
-          <p>{totalPrice}</p>
+          <p>{totalPrice + 0.99}</p>
         </div>
-       <AddOrder getCartItems={getCartItems} cartFood={cartFood}/>
+       <AddOrder getCartItems={getCartItems} setCartItems={setCartItems} cartItems={cartItems} totalPrice={totalPrice}/>
       </div>
     </div>
   );

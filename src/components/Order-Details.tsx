@@ -21,7 +21,7 @@ const OrderDetail = () => {
           <ShoppingCart stroke="black" size={16} />
         </div>
       </SheetTrigger>
-      <SheetContent className="w-[535px] sm:max-w-xl bg-[#404040] border-none flex flex-col gap-6">
+      <SheetContent className="w-[535px] sm:max-w-xl bg-[#404040] border-none flex flex-col gap-6 lg:gap-3">
         <SheetHeader>
           <SheetTitle>
             <div className="flex text-[#FFFFFF] gap-3">
@@ -31,16 +31,16 @@ const OrderDetail = () => {
           </SheetTitle>
           <SheetDescription></SheetDescription>
         </SheetHeader>
-        <div className="w-full rounded-full py-1 px-2 bg-[#FFFFFF] flex gap-2">
+        <div className="w-full rounded-full py-1 lg:py-[2px] lg:px-[4px] px-2 bg-[#FFFFFF] flex gap-2">
           <button
-            className="w-1/2 flex rounded-full justify-center py-1"
+            className="w-1/2 flex rounded-full justify-center py-1 lg:text-sm"
             onClick={() => setTab("cart")}
             style={tab==="cart"?{background:"#EF4444", color:"white"}:{}}
           >
             Cart
           </button>
           <button
-            className="w-1/2 flex rounded-full justify-center py-1"
+            className="w-1/2 flex rounded-full justify-center py-1 lg:text-sm"
             onClick={() => setTab("order")}
             style={tab==="order"?{background:"#EF4444", color:"white"}:{}}
           >

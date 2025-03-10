@@ -71,7 +71,7 @@ const SelectLocation = () => {
             </>
           ) : (
             <div className="flex items-center gap-10 max-w-[200px]">
-              <p className="text-black">{address}</p>
+              <p className="text-black truncate text-[#18181B80] text-sm">{address}</p>
               <X stroke="black" size={20}/>
             </div>
           )}

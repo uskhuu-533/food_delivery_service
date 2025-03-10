@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+'use client'
+
+import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import Email from "./Email";
@@ -17,9 +19,6 @@ const SignUP = () => {
   const goLoginPage = () => {
     router.push("/login");
   };
-
-  console.log(newUser);
-
 
 
   // In your component:
