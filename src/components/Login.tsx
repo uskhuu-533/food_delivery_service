@@ -26,8 +26,9 @@ const Login = () => {
   const checkPassword = async () => {
     try {
       const response = await checkPasswordLogin(form);
-
-      if (response == "ok") {
+      localStorage.clear()
+      localStorage.setItem("user", response?.data)
+      if (response?.status == 200) {
         router.push("/home");
       }
     } catch (err) {
@@ -39,6 +40,8 @@ const Login = () => {
     if (regex.test(form.email)) {
       checkPassword();
     } else {
+      console.log('failed');
+      
       setInvaild(true);
     }
   };

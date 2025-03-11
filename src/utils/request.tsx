@@ -11,7 +11,7 @@ type User = {
   };
 
 // const URL = "http://localhost:3000"
-const URL = "https://food-back-henna.vercel.app"
+const URL = "https://food-service-cyan.vercel.app"  
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
@@ -74,12 +74,12 @@ export const getUserEmail = async () => {
 export const checkPasswordLogin = async (form: object) => {
   try {
     const response = await axios.post(`${URL}/users/login`, form);
+console.log(response);
 
-    if (response.statusText == "OK") {
-      localStorage.clear();
-      localStorage.setItem("user", response.data);
-      return "ok"
-    }
+    
+
+      return response
+    
   } catch (err) {
     console.error("Error posting user:", err);
   }
