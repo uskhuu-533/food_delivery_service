@@ -25,10 +25,13 @@ type food = {
 const CategoryFoods = ({ category, categoryTitle }: Props) => {
   const [foods, setFoods] = useState([]);
   const [categoryId] = useQueryState("categoryid");
-  const getFood = async () => {
+  const API = process.env.NEXT_PUBLIC_BASE_URL
+  console.log(API);
+  
+  const getFoods = async () => {
     if (!category) return
     try {
-      const response = await axios.get(`http://localhost:3000/food/${category}`);
+      const response = await axios.get(`${API}/food/${category}`);
       setFoods(response.data);
     } catch (error) {
       console.error("Error fetching food data:", error);
@@ -36,7 +39,7 @@ const CategoryFoods = ({ category, categoryTitle }: Props) => {
   };
   
   useEffect(() => {
-    getFood();
+    getFoods();
   }, [categoryId]);
 
   return (

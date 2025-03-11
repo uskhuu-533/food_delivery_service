@@ -5,7 +5,6 @@ import {
     DropdownMenuContent,
     DropdownMenuLabel,
     DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
@@ -17,7 +16,6 @@ import axios from "axios"
   
 
 const UserDetail = () => {
-    const [position, setPosition] = React.useState("bottom")
     const [email, setEmail] = useState('')
      const router = useRouter()
     useEffect(()=>{
@@ -57,7 +55,7 @@ const UserDetail = () => {
         <DropdownMenuContent className="w-[188px] p-4 gap-2">
           <DropdownMenuLabel>{email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={position} className="flex justify-center">
+          <DropdownMenuRadioGroup value={"bottom"} className="flex justify-center">
             <Button className="rounded-full" onClick={signOut}>Sign out</Button>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>

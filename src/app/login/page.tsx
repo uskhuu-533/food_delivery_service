@@ -1,14 +1,12 @@
 "use client";
 
-
-
 import Login from "@/components/Login";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="w-screen dark:text-white flex h-screen items-center">
-        <Login />
+      <Login />
       <Image src="/home.webp" width={856} height={904} alt="home" />
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Map, Soup, Timer } from "lucide-react";
+import { Map, Timer } from "lucide-react";
 import OrderItem from "./Order-Item";
 import { useEffect, useState } from "react";
 import axios from "axios";

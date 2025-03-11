@@ -27,6 +27,7 @@ const CartDetail = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(true);
 
+
   const getCartItems = async () => {
     const token = localStorage.getItem("user")
     setLoading(true);
@@ -82,7 +83,7 @@ const CartDetail = () => {
     <div className="w-full h-full flex flex-col gap-6 lg:gap-3 ">
       <div className="p-4 w-full rounded-xl h-[60%] bg-[#FFFFFF] flex flex-col gap-5 overflow-scroll">
         <h1 className="font-bold text-xl lg:text-md">My cart</h1>
-        {cartItems.length === 0 ? (
+        {loading == false ?(<>{cartItems.length === 0 ? (
           <div className="py-8 px-12 w-full flex flex-col items-center gap-1 bg-[#F4F4F5] rounded-md">
             <Logo />
             <div className="text-lg font-semibold">Your cart is empty</div>
@@ -99,7 +100,7 @@ const CartDetail = () => {
               getCartItems={getCartItems}
             />
           ))
-        )}
+        )}</>):(<div>loading ...</div>)}
         <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
           Add foods
         </button>

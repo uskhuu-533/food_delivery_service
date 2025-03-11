@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import { Suspense } from "react";
+import Header from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Suspense>
+              <Header />
            <NuqsAdapter>{children}</NuqsAdapter>
+           </Suspense>
           </ThemeProvider>
       </body>
     </html>

@@ -14,7 +14,7 @@ type User = {
   password: string;
 };
 const Password = ({ setStep, postUser, setUser, user }: props) => {
-  const router = useRouter();
+
 
   const [confirm, setConfirm] = useState<string>("");
   const [isPasswordError, SetErrorPassword] = useState<string | undefined>();

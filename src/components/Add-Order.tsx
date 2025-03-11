@@ -17,7 +17,6 @@ type CartItemType = {
 };
 
 const AddOrder = ({
-  getCartItems,
   cartItems,
   totalPrice,
   setCartItems,

@@ -15,7 +15,7 @@ const SignUP = () => {
   const router = useRouter();
   const [step, setStep] = useState<number>(1);
   const [newUser, setUser] = useState<User>({ email: "", password:"" });
-  const [error, setError] = useState<unknown>()
+  const [errors, setError] = useState<unknown>()
   const goLoginPage = () => {
     router.push("/login");
   };
@@ -32,6 +32,8 @@ const SignUP = () => {
       const error = err as AxiosError;
       if (error.response) {
         setError(error.response.data);
+        console.log(errors);
+        
       } else {
         setError(undefined);
       }
