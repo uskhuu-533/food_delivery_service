@@ -10,7 +10,7 @@ type User = {
     password: string;
   };
 
-const URL = process.env.NEXT_PUBLIC_BASE_URL_;
+const URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
