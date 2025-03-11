@@ -10,7 +10,7 @@ type User = {
     password: string;
   };
 
-const URL = process.env.NEXT_PUBLIC_BASE_URL;
+const URL = "https://food-backend-7cquazb3y-uskhuuus-projects.vercel.app"
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
