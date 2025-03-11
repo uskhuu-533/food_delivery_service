@@ -1,11 +1,233 @@
 import axios from "axios";
+type Item = {
+  food: string;
+};
+type food = {
+  _id: string;
+};
+type User = {
+    email: string;
+    password: string;
+  };
 
-export const getFood = async (category:string) => {
-    
+const URL = process.env.NEXT_PUBLIC_BASE_URL_;
+export const getFood = async (category: string) => {
+  try {
+    const response = await axios.get(`${URL}/food/${category}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching food data:", error);
+  }
+};
+
+export const addToOrder = async (
+  cartItems: food[],
+  totalPrice: number,
+  getCartItems: Function
+) => {
+  if (cartItems.length === 0) return;
+  try {
+    const token = localStorage.getItem("user");
+    console.log(token);
+
+    const response = await axios.post(
+      `${URL}/foodorder`,
+      { foodOrderItems: cartItems, totalPrice: totalPrice },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      }
+    );
+    console.log(response.data);
+
+    const res = await axios.patch(
+      `${URL}/foodorderitems`,
+      {},
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(res.data);
+    getCartItems();
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getUserEmail = async () => {
+  const token = localStorage.getItem("user");
+  try {
+    const response = await axios.get(`${URL}/users`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const checkPasswordLogin = async (form: object) => {
+  try {
+    const response = await axios.post(`${URL}/users/login`, form);
+
+    if (response.statusText == "OK") {
+      localStorage.clear();
+      localStorage.setItem("user", response.data);
+      return "ok"
+    }
+  } catch (err) {
+    console.error("Error posting user:", err);
+  }
+};
+
+export const getOrders = async () => {
+  const token = localStorage.getItem("user");
+  try {
+    const response = await axios.get(`${URL}/foodorder`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCartItems = async (itemId: string) => {
+  try {
+    const response = await axios.get(`${URL}/foodorderitems/${itemId}`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getFoodByOrder = async (item: Item) => {
+  try {
+    const res = await axios.get(`${URL}/food/orderitem/${item.food}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserAddress = async () => {
+  const token = localStorage.getItem("user");
+  try {
+    const response = await axios.get(`${URL}/users/address`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addToCartReq = async (food: food, count: number) => {
+  try {
+    const token = localStorage.getItem("user");
+    const response = await axios.post(
+      `${URL}/foodorderitems/${food._id}`,
+      { count: count },
+      {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const fetchFoodDetail = async (foodId: string) => {
+  try {
+    const response = await axios.get(`${URL}/food/orderitem/${foodId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserCart = async () => {
+  const token = localStorage.getItem("user");
+  try {
+    const response = await axios.get(`${URL}/foodorderitems`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const putOrderItem = async (item: string, delta: number) => {
+  try {
+    await axios.put(`${URL}/foodorderitems/${item}`, {
+      count: delta,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteItem = async (item: string) => {
+  try {
+    const response = await axios.delete(
+      `${URL}/foodorderitems/${item}`
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCategory = async () => {
+  try {
+    const response = await axios.get(`${URL}/category`);
+    console.log(response);
+
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export  const putUser = async (location:string) => {
+    const token = localStorage.getItem("user");
     try {
-      const response = await axios.get(`http://localhost:3000/food/${category}`);
-      return response.data
+      const response = await axios.put(
+        `${URL}/users`,
+        { address: location },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    console.log(response);
+    
     } catch (error) {
-      console.error("Error fetching food data:", error);
+      console.log(error);
     }
   };
+
+  export const postNewUser = async (newUser:User) => {
+    try {
+        const response = await axios.post(`${URL}/users`, newUser);
+        console.log(response);
+       return response
+      } catch (err) {
+        console.error("Error posting user:", err);
+    }
+  }

@@ -3,7 +3,7 @@
 import { Map, Timer } from "lucide-react";
 import OrderItem from "./Order-Item";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getUserAddress } from "@/utils/request";
 
 type Props = {
   order: order;
@@ -20,17 +20,9 @@ const OrderList = ({ order }: Props) => {
     const [address, setAddress] = useState("")
     useEffect(() => {
         const getAddress = async () => {
-          const token = localStorage.getItem("user");
           try {
-            const response = await axios.get(
-              `http://localhost:3000/users/address`,
-              {
-                headers: {
-                  Authorization: token,
-                },
-              }
-            );
-            setAddress(response.data);
+            const response = await getUserAddress()
+            setAddress(response);
           } catch (error) {
             console.log(error);
           }

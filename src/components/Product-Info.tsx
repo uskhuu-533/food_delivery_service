@@ -10,7 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import axios from "axios";
+import { addToCartReq } from "@/utils/request";
+
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 
@@ -28,18 +29,8 @@ export function ProductInfo({ food }: Props) {
   const [count, setCount] = useState(1);
   const addToCart = async () => { 
     try {
-      const token = localStorage.getItem("user");
-      const response =await axios.post(
-        `http://localhost:3000/foodorderitems/${food._id}`,
-        {count: count},
-        {
-          headers: {
-            Authorization: `${token}`,
-            'Content-Type': 'application/json'
-          },
-        }
-      );
-      console.log(response);
+   
+      const response =await addToCartReq(food, count)
     } catch (error) {
       console.log(error);
     }

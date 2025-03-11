@@ -12,7 +12,7 @@ import { Button } from "./ui/button"
 import React, { useEffect, useState } from "react"
 import { User } from "lucide-react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import { getUserEmail } from "@/utils/request"
   
 
 const UserDetail = () => {
@@ -25,15 +25,10 @@ const UserDetail = () => {
                 router.push('/login')
             }
             try {
-                const response = await axios.get('http://localhost:3000/users', {
-                    headers : {
-                        Authorization : token
-                    }
-                })
-                console.log(response);
+                const response = await getUserEmail()
                 
-                setEmail(response.data)
-                if (response.status !== 200) {
+                setEmail(response?.data)
+                if (response!.status !== 200) {
                     router.push('/login')
                 }
             } catch (error) {

@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { getCartItems, getFoodByOrder } from "@/utils/request";
 import { Soup } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -32,10 +32,8 @@ const OrderItem = ({ itemId }: Props) => {
   })
    const getCartItem = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/foodorderitems/${itemId}`
-      );
-      setItem(response.data)
+      const response = await getCartItems(itemId)
+      setItem(response)
       if (response.data) {
         getFood(response.data);
       }
@@ -46,15 +44,11 @@ const OrderItem = ({ itemId }: Props) => {
   useEffect(() => {
     getCartItem();
   }, []);
-  const getFood = async (data: Item) => {
-    console.log(data);
+  const getFood = async (item: Item) => {
 
     try {
-      const res = await axios.get(
-        `http://localhost:3000/food/orderitem/${data.food}`
-      );
-      setFood(res.data)
-      console.log(res);
+      const res = await getFoodByOrder(item)
+      setFood(res)
     } catch (error) {
       console.log(error);
     }

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ProductInfo from "./Product-Info";
-import axios from "axios";
 import { useQueryState } from "nuqs";
+import { getFood } from "@/utils/request";
 
 type Props = {
   category: string | null;
@@ -25,14 +25,11 @@ type food = {
 const CategoryFoods = ({ category, categoryTitle }: Props) => {
   const [foods, setFoods] = useState([]);
   const [categoryId] = useQueryState("categoryid");
-  const API = process.env.NEXT_PUBLIC_BASE_URL
-  console.log(API);
-  
   const getFoods = async () => {
     if (!category) return
     try {
-      const response = await axios.get(`${API}/food/${category}`);
-      setFoods(response.data);
+      const response =await getFood(category)
+      setFoods(response);
     } catch (error) {
       console.error("Error fetching food data:", error);
     }

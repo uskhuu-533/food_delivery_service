@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { deleteItem, getFoodByOrder, putOrderItem } from "@/utils/request";
 import { Minus, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
@@ -38,10 +38,8 @@ const CartItem = ({ item, getCartItems }: Props) => {
 
   const getFood = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/food/orderitem/${item.food}`
-      );
-      setFoodDetail(response.data);
+      const response = await getFoodByOrder(item)
+      setFoodDetail(response);
     } catch (error) {
       console.log(error);
     }
@@ -63,11 +61,8 @@ const CartItem = ({ item, getCartItems }: Props) => {
 
       if (delta === 0) return;
       try {
-        await axios.put(`http://localhost:3000/foodorderitems/${item._id}`, {
-          count: delta,
-        });
-        
-        getCartItems();
+        await putOrderItem(item._id, delta)
+        getCartItems()
       } catch (error) {
         console.log(error);
         setLocalQuantity(item.quantity);
@@ -88,11 +83,7 @@ const CartItem = ({ item, getCartItems }: Props) => {
 
   const removeItem = async () => {
     try {
-      const response = await axios.delete(
-        `http://localhost:3000/foodorderitems/${item._id}`
-      );
-      console.log(response.data);
-
+      const response = await deleteItem(item._id)
       getCartItems();
     } catch (error) {
       console.log(error);

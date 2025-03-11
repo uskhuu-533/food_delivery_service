@@ -1,6 +1,7 @@
 "use client";
 
-import axios from "axios";
+
+import { getUserEmail } from "@/utils/request";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,14 +35,9 @@ const Email = ({ setStep, setUser, user }: props) => {
 
   useEffect(() => {
     const getEmail = async () => {
-      const token = localStorage.getItem("user");
       try {
-        const response = await axios.get("http://localhost:3000/users", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        if (response.statusText == "OK") {
+        const response = await getUserEmail()
+        if (response?.statusText == "OK") {
           router.push("/home");
         }
       } catch (error) {

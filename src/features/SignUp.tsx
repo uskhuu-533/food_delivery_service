@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Email from "../components/Email";
 import Password from "../components/Password";
-import axios from "axios";
 import { AxiosError } from 'axios';
+import { postNewUser } from "@/utils/request";
 type User = {
   email: string;
   password: string;
@@ -24,9 +24,11 @@ const SignUP = () => {
   // In your component:
   const postUser = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/users", newUser);
-      console.log(response);
+      const response = await postNewUser(newUser)
+     if (response?.statusText === "OK") {
       router.push('/login')
+     }
+      
     } catch (err) {
       console.error("Error posting user:", err);
       const error = err as AxiosError;

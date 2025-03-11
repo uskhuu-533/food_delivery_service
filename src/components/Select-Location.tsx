@@ -11,24 +11,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ChevronRight, MapPin, X } from "lucide-react";
-import axios from "axios";
+
 import { useEffect, useState } from "react";
+import { getUserAddress, putUser } from "@/utils/request";
 
 const SelectLocation = () => {
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState(null);
   const onSubmit = async () => {
-    const token = localStorage.getItem("user");
     try {
-      const response = await axios.put(
-        `http://localhost:3000/users`,
-        { address: location },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await putUser(location)
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -43,15 +35,8 @@ const SelectLocation = () => {
     const getAddress = async () => {
       const token = localStorage.getItem("user");
       try {
-        const response = await axios.get(
-          `http://localhost:3000/users/address`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        setAddress(response.data);
+        const response = await getUserAddress()
+        setAddress(response);
       } catch (error) {
         console.log(error);
       }

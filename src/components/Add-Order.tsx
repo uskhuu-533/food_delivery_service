@@ -1,4 +1,4 @@
-import axios from "axios";
+import { addToOrder } from "@/utils/request";
 type Props = {
   getCartItems: Function;
   cartItems: foods[];
@@ -19,43 +19,12 @@ type CartItemType = {
 const AddOrder = ({
   cartItems,
   totalPrice,
-  setCartItems,
+  getCartItems
 }: Props) => {
-  const addToOrder = async () => {
-    if (cartItems.length === 0) return;
-    try {
-      const token = localStorage.getItem("user");
-      console.log(token);
-
-      const response = await axios.post(
-        `http://localhost:3000/foodorder`,
-        { foodOrderItems: cartItems, totalPrice: totalPrice },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
-      const res = await axios.patch(`http://localhost:3000/foodorderitems`, 
-      {},
-      {
-        headers: {
-          Authorization: `${token}`,
-          'Content-Type': 'application/json'
-        },
-      });
-      console.log(res);
-      
-      setCartItems([]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <button
       className="w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px]"
-      onClick={addToOrder}
+      onClick={()=>addToOrder(cartItems, totalPrice, getCartItems)}
     >
       Check out
     </button>

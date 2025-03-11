@@ -1,11 +1,11 @@
 'use client'
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 import AddOrder from "./Add-Order";
 import Logo from "./icons/Logo";
 import CartItem from "./Cart-Item";
+import { fetchFoodDetail, getUserCart } from "@/utils/request";
 
 type CartItemType = {
   food: string;
@@ -32,14 +32,10 @@ const CartDetail = () => {
     const token = localStorage.getItem("user")
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3000/foodorderitems`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-      setCartItems(response.data);
+      const response = await getUserCart()
+      setCartItems(response);
       
-      await Promise.all(response.data.map((item: CartItemType) => getFoodDetail(item.food)));
+      await Promise.all(response.map((item: CartItemType) => getFoodDetail(item.food)));
       
       setLoading(false);
     } catch (error) {
@@ -51,12 +47,10 @@ const CartDetail = () => {
   
   const getFoodDetail = async (foodId: string) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/food/orderitem/${foodId}`
-      );
+      const response = await fetchFoodDetail(foodId)
       setFoodDetails(prev => ({
         ...prev,
-        [foodId]: response.data
+        [foodId]: response
       }));
     } catch (error) {
       console.log(error);
