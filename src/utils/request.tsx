@@ -93,6 +93,8 @@ export const getOrders = async () => {
         Authorization: `${token}`,
       },
     });
+    console.log(response);
+    
     return response.data;
   } catch (error) {
     console.log(error);
@@ -166,6 +168,8 @@ export const getUserCart = async () => {
         Authorization: `${token}`,
       },
     });
+    console.log(response);
+    
     return response.data;
   } catch (error) {
     console.log(error);

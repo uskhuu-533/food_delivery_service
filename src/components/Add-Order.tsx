@@ -1,21 +1,21 @@
 import { addToOrder } from "@/utils/request";
 type Props = {
   getCartItems: Function;
-  cartItems: foods[];
+  cartItems: CartItemType[];
   totalPrice: number;
-  setCartItems: (cartItems: CartItemType[]) => void;
 };
-type foods = {
-  food: string;
-  quantity: number;
+type food = {
+  food_image: string | undefined;
+  food_name: string;
+  food_description: string;
+  price: number;
   _id: string;
 };
 type CartItemType = {
-  food: string;
+  food: food;
   quantity: number;
   _id: string;
 };
-
 const AddOrder = ({
   cartItems,
   totalPrice,

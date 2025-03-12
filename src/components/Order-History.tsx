@@ -41,6 +41,7 @@ const OrderHistory = () => {
           orderHistory.map((order, index) => (
             <OrderList order={order} key={index} />
           ))
+        
         )}
       </div>
     </div>

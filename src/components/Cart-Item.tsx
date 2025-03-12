@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 type Props = {
-  item: item;
+  food : food
   getCartItems: Function;
+  itemId : string
+  quantity : number
 };
 
 type food = {
@@ -18,59 +20,37 @@ type food = {
   _id: string;
 };
 
-type item = {
-  food: string;
-  quantity: number;
-  _id: string;
-};
 
-const CartItem = ({ item, getCartItems }: Props) => {
-  const [foodDetail, setFoodDetail] = useState<food>({
-    food_image: undefined,
-    food_name: "",
-    food_description: "",
-    price: 0,
-    _id: "",
-  });
+const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
 
-  const [localQuantity, setLocalQuantity] = useState(item.quantity);
+
+
+  const [localQuantity, setLocalQuantity] = useState(quantity);
   const [debouncedQuantity] = useDebounce(localQuantity, 1000);
 
-  const getFood = async () => {
-    try {
-      const response = await getFoodByOrder(item)
-      setFoodDetail(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
+  useEffect(() => {
+    setLocalQuantity(quantity);
+  }, [quantity]);
 
   useEffect(() => {
-    getFood();
-  }, []);
-
-  useEffect(() => {
-    setLocalQuantity(item.quantity);
-  }, [item.quantity]);
-
-  useEffect(() => {
-    if (debouncedQuantity === item.quantity) return;
+    if (debouncedQuantity === quantity) return;
 
     const updateQuantity = async () => {
-      const delta: number = debouncedQuantity - item.quantity;
+      const delta: number = debouncedQuantity - quantity;
 
       if (delta === 0) return;
       try {
-        await putOrderItem(item._id, delta)
+        await putOrderItem(itemId, delta)
         getCartItems()
       } catch (error) {
         console.log(error);
-        setLocalQuantity(item.quantity);
+        setLocalQuantity(quantity);
       }
     };
 
     updateQuantity();
-  }, [debouncedQuantity, item._id, item.quantity]);
+  }, [debouncedQuantity, itemId, quantity]);
 
   const plusItem = () => {
     setLocalQuantity((prev) => prev + 1);
@@ -83,28 +63,30 @@ const CartItem = ({ item, getCartItems }: Props) => {
 
   const removeItem = async () => {
     try {
-      const response = await deleteItem(item._id)
+      const response = await deleteItem(itemId)
+      console.log(response);
+      
       getCartItems();
     } catch (error) {
       console.log(error);
     }
   };
-  const price = (localQuantity * (foodDetail?.price || 0)).toFixed(2);
+  const price = (localQuantity * (food?.price || 0)).toFixed(2);
 
   return (
     <div className="w-full h-[120px] flex gap-[10px]">
       <div className="w-[124px] h-full relative rounded-md overflow-hidden">
         <img
           className="w-[124px] h-auto absolute"
-          src={foodDetail?.food_image}
-          alt={foodDetail?.food_name}
+          src={food.food_image}
+          alt={food.food_name}
         />
       </div>
       <div className="flex w-[70%] flex-col gap-6">
         <div className="w-full flex h-[60%] justify-between">
           <div>
-            <h1>{foodDetail?.food_name}</h1>
-            <p>{foodDetail?.food_description}</p>
+            <h1>{food.food_name}</h1>
+            <p>{food.food_description}</p>
           </div>
           <button
             onClick={removeItem}
