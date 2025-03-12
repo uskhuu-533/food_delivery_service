@@ -34,8 +34,8 @@ const OrderItem = ({ itemId }: Props) => {
     try {
       const response = await getCartItems(itemId)
       setItem(response)
-      if (response.data) {
-        getFood(response.data);
+      if (response) {
+        getFood(response);
       }
     } catch (error) {
       console.log(error);
@@ -48,6 +48,8 @@ const OrderItem = ({ itemId }: Props) => {
 
     try {
       const res = await getFoodByOrder(item)
+      console.log(res);
+      
       setFood(res)
     } catch (error) {
       console.log(error);

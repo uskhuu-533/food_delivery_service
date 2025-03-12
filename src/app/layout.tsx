@@ -39,7 +39,6 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Suspense>
-              <Header />
            <NuqsAdapter>{children}</NuqsAdapter>
            </Suspense>
           </ThemeProvider>
