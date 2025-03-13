@@ -29,7 +29,7 @@ const Login = () => {
       localStorage.clear()
       localStorage.setItem("user", response?.data)
       if (response?.status == 200) {
-        router.push("/home");
+        router.push("/");
       }
     } catch (err) {
       console.error("Error posting user:", err);
@@ -48,13 +48,10 @@ const Login = () => {
   useEffect(() => {
     const getEmail = async () => {
       const token = localStorage.getItem("user");
-      if (!token) {
-        router.push("/login");
-      }
       try {
         const response = await getUserEmail()
         if (response?.statusText === "OK") {
-          router.push("/home");
+          router.push("/");
         }
       } catch (error) {
         console.log(error);
@@ -117,7 +114,7 @@ const Login = () => {
         </button>
         <div className="flex w-full justify-center gap-4">
           <p>Don’t have an account?</p>
-          <p onClick={() => router.push("/")} className="text-[#2563EB]">
+          <p onClick={() => router.push("/sign-up")} className="text-[#2563EB]">
             Sign up
           </p>
         </div>

@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import AddOrder from "./Add-Order";
-import Logo from "./icons/Logo";
-import CartItem from "./Cart-Item";
-import { fetchFoodDetail, getUserCart } from "@/utils/request";
+import Logo from "../../components/icons/Logo";
+import CartItem from "../_components/Cart-Item";
+import { addToOrder, fetchFoodDetail, getUserCart } from "@/utils/request";
+import { Button } from "../../components/ui/button";
 
 type CartItemType = {
   food: food;
@@ -93,7 +93,12 @@ const CartDetail = () => {
           <p>Total</p>
           <p>{totalPrice + 0.99}</p>
         </div>
-        <AddOrder getCartItems={getCartItems}  cartItems={cartItems} totalPrice={totalPrice}/>
+           <Button
+             className="w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px]"
+             onClick={()=>addToOrder(cartItems, totalPrice, getCartItems)}
+           >
+             Check out
+           </Button>
       </div>
     </div>
   );

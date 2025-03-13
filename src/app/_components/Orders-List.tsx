@@ -1,10 +1,10 @@
 "use client";
 
-import { Map, Timer } from "lucide-react";
-import OrderItem from "./Order-Food";
+import { Map, Soup, Timer } from "lucide-react";
+
 import { useEffect, useState } from "react";
 import { getUserAddress } from "@/utils/request";
-import OrderFood from "./Order-Food";
+
 
 type Props = {
   order: order;
@@ -48,8 +48,16 @@ const OrderList = ({ order }: Props) => {
         <div>{order.status}</div>
       </div>
       <div className="flex flex-col text-[#09090B80]">
-        {order.orderItems.map((orderItem :item, index) => (
-          <OrderFood key={index} item={orderItem} />
+        {order.orderItems.map((item :item, index) => (
+           <div key={index} className="flex w-full flex-col">
+           <div className="flex justify-between">
+             <div className="flex gap-2 items-center">
+               <Soup size={16} />
+               <p>{item.food.food_name}</p>
+             </div>
+             <div>x{item.quantity}</div>
+           </div>
+         </div>
         ))}
         <div className="w-full flex items-center gap-2">
           <Timer size={16} stroke="#09090B80" />

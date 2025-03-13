@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductInfo from "./Product-Info";
+import ProductInfo from "../_components/Product-Info";
 import { useQueryState } from "nuqs";
 import { getFood } from "@/utils/request";
 

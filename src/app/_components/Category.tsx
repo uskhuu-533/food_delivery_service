@@ -19,7 +19,7 @@ const Category = ({ categories }: Props) => {
   const [categoryId, setCategory] = useQueryState("categoryid");
 
   const handleCategory = (_id: string | null) => {
-    if (window.location.pathname === "/home") {
+    if (window.location.pathname === "/") {
       router.push(`/category?categoryid=${_id}`);
     } else if (window.location.pathname === `/category`) {
       console.log("worked");

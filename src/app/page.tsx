@@ -1,13 +1,20 @@
-"use client";
+import Header from "@/components/Header";
+import MenuContainer from "@/app/_features/Menu-Container";
 
-import SignUP from "@/features/SignUp";
-import Image from "next/image";
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="w-screen flex h-screen items-center">
-      <SignUP/>
-      <Image src="/home.webp" width={856} height={904} alt="home" />
+    <div >
+      <Header/>
+      <div className="flex w-full max-h-[800px] h-fit relative overflow-hidden">
+        <img
+          className="w-full h-auto  lg:mt-0 mt-12"
+          src={`/mainbg.jpg`}
+          alt="home"
+        />
+      </div>
+      <MenuContainer />
     </div>
   );
-}
+};
+export default Home;

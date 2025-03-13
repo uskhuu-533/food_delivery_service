@@ -76,10 +76,6 @@ export const getUserEmail = async () => {
 export const checkPasswordLogin = async (form: object) => {
   try {
     const response = await axios.post(`${URL}/users/login`, form);
-console.log(response);
-
-    
-
       return response
     
   } catch (err) {

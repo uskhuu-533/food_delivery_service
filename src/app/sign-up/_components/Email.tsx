@@ -38,7 +38,7 @@ const Email = ({ setStep, setUser, user }: props) => {
       try {
         const response = await getUserEmail()
         if (response?.statusText == "OK") {
-          router.push("/home");
+          router.push("/");
         }
       } catch (error) {
         console.log(error);

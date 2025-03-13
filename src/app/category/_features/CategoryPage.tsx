@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Category from "./Category";
-import CategoryFoods from "./Category-Food-List";
+import Category from "../../_components/Category";
+import CategoryFoods from "../../_features/Category-Food-List";
 import { useQueryState } from "nuqs";
 import { getCategory } from "@/utils/request";
 type category = {

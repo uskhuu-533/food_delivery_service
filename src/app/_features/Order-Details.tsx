@@ -9,8 +9,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ShoppingCart } from "lucide-react";
-import CartDetail from "../components/Cart-Detail";
-import OrderHistory from "../components/Order-History";
+import CartDetail from "./Cart-Detail";
+import OrderHistory from "./Order-History";
 import { useState } from "react";
 const OrderDetail = () => {
   const [tab, setTab] = useState("cart");

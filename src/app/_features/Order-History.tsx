@@ -1,8 +1,8 @@
 "use client";
 
-import Logo from "./icons/Logo";
+import Logo from "../../components/icons/Logo";
 import { useEffect, useState } from "react";
-import OrderList from "./Orders-List";
+import OrderList from "../_components/Orders-List";
 import { getOrders } from "@/utils/request";
 
 const OrderHistory = () => {

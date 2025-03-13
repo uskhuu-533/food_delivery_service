@@ -1,12 +1,12 @@
 "use client";
 
-import Login from "@/app/login/_features/Login";
+import SignUP from "@/app/sign-up/_features/SignUp";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="w-screen dark:text-white flex h-screen items-center">
-      <Login />
+    <div className="w-screen flex h-screen items-center">
+      <SignUP/>
       <Image src="/home.webp" width={856} height={904} alt="home" />
     </div>
   );
