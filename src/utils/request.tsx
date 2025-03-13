@@ -15,6 +15,8 @@ const URL = "http://localhost:3000"
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
+    console.log(response);
+    
     return response.data;
   } catch (error) {
     console.error("Error fetching food data:", error);
