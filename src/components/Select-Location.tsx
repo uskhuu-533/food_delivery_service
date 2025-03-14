@@ -70,7 +70,7 @@ const SelectLocation = () => {
         <div className="grid gap-4 py-4">
           <textarea
             placeholder="Please provide specific address details such as building number, entrance, and apartment number"
-            className="bg-[#FFFFFF] border w-full rounded-md h-full h-[100px]"
+            className="bg-[#FFFFFF] border w-full rounded-md h-full h-[100px] resize-none"
             rows={5}
             onChange={(e) => handleChangeValue(e)}
           ></textarea>

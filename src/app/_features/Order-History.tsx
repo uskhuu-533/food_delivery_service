@@ -20,7 +20,7 @@ const OrderHistory = () => {
   }, []);
   return (
     <div className="w-full h-full bg-[#FFFFFF] rounded-lg">
-      <div className="p-4 w-full rounded-xl h-full bg-[#FFFFFF] flex flex-col gap-5">
+      <div className="p-4 w-full rounded-xl h-full bg-[#FFFFFF] overflow-scroll flex flex-col gap-5">
         <h1 className="font-bold text-xl">Order history</h1>
         {orderHistory.length === 0 ? (
           <>

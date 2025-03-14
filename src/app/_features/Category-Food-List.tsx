@@ -40,13 +40,13 @@ const CategoryFoods = ({ category, categoryTitle }: Props) => {
   }, [categoryId]);
 
   return (
-    <div className="w-full h-fit rounded-md  flex flex-col gap-3">
+    <div className="w-full h-fit rounded-md  flex flex-col gap-3 p-8">
       <p className="text-2xl font-semibold">{categoryTitle}</p>
-      <div className="flex flex-wrap gap-6">
+      <div className="grid grid-cols-3 gap-6">
         {foods.map((food: food, index) => (
           <div
             key={index}
-            className="w-[271px] h-[257px] text-black rounded-md bg-white   flex flex-col p-4"
+            className="h-[100px] xl:h-[350px] lg:h-[305px] md:h-[200px] sm:[150px] text-black rounded-lg bg-white flex flex-col p-4 gap-2"
           >
             <div className="w-full h-[70%] relative overflow-hidden rounded-md flex items-center">
               <img
@@ -57,12 +57,12 @@ const CategoryFoods = ({ category, categoryTitle }: Props) => {
               <ProductInfo food={food} />
             </div>
             <div className="w-full flex justify-between">
-              <p className="text-[#EF4444] text-lg font-semibold">
+              <p className="text-[#EF4444] text-xl font-semibold">
                 {food.food_name}
               </p>
-              <p>${food.price}</p>
+              <p className="text-xl">${food.price}</p>
             </div>
-            <div className="text-[12px]">{food.food_description}</div>
+            <div className="text-md">{food.food_description}</div>
           </div>
         ))}
       </div>

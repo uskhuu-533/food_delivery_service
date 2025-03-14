@@ -36,7 +36,7 @@ const MenuContainer = () => {
     },[])
     return(
         <div className="w-screen h-fit flex dark:text-white justify-center">
-            <div className="max-w-[1264px] w-full h-fit flex py-8 flex-col gap-8">
+            <div className="max-w-[1440px] w-full h-fit flex py-8 flex-col gap-8">
                 <Category categories={categories} />
                  <div className="flex flex-col w-full gap-6 pb-10">
                     {categories.map((category, index)=>(
