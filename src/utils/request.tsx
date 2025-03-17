@@ -10,8 +10,8 @@ type User = {
     password: string;
   };
 
-const URL = "http://localhost:3000"
-// const URL = "https://food-service-cyan.vercel.app"  
+// const URL = "http://localhost:3000"
+const URL = "https://food-service-cyan.vercel.app"  
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
