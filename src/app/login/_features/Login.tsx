@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { checkPasswordLogin, getUserEmail } from "@/utils/request";
 
 import { ChevronLeft } from "lucide-react";
@@ -41,7 +42,6 @@ const Login = () => {
       checkPassword();
     } else {
       console.log('failed');
-      
       setInvaild(true);
     }
   };
@@ -59,6 +59,7 @@ const Login = () => {
     };
     getEmail();
   }, []);
+  
   return (
     <div className="w-[40%] flex items-center justify-center">
       <div className="w-[80%] flex flex-col h-fit gap-6">
@@ -106,12 +107,12 @@ const Login = () => {
             <p>Show password</p>
           </div>
         </form>
-        <button
+        <Button
           onClick={jumpToHome}
           className="py-[4px] w-full border rounded-md"
         >
           let's go
-        </button>
+        </Button>
         <div className="flex w-full justify-center gap-4">
           <p>Don’t have an account?</p>
           <p onClick={() => router.push("/sign-up")} className="text-[#2563EB]">
