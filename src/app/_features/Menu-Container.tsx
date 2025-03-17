@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Category from "../_components/Category"
 import axios from "axios"
 import CategoryFoods from "./Category-Food-List"
+import { getCategory } from "@/utils/request"
 
 type category ={
     title :string,
@@ -21,12 +22,11 @@ const MenuContainer = () => {
     useEffect(()=>{
         const fetchFoodByCategory = async () => {
             try{
-                const response = await axios.get(`http://localhost:3000/category`)
+                const response = await getCategory()
                 console.log(response);
+               
+                    setCategory(response)
                 
-                if(Array.isArray(response.data)){
-                    setCategory(response.data)
-                }
             }catch(err){
                 console.log(err);
                 
