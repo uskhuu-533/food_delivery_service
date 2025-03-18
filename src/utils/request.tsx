@@ -68,6 +68,8 @@ export const getUserEmail = async () => {
         Authorization: token,
       },
     });
+    console.log(response);
+    
     return response;
   } catch (error) {
     console.log(error);

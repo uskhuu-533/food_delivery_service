@@ -50,7 +50,7 @@ const Login = () => {
       const token = localStorage.getItem("user");
       try {
         const response = await getUserEmail()
-        if (response?.statusText === "OK") {
+        if (response?.status === 200) {
           router.push("/");
         }
       } catch (error) {
