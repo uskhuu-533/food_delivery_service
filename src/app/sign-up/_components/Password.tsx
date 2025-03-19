@@ -27,6 +27,16 @@ export const RegistrationPasswordInput = ({
   form
 }: props) => {
 const [show, setShow] = useState(false)
+const sendOPT = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/opt/generate-otp', {email : form.watch("email")})
+    console.log(response);
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
 
   return (
     <div className="gap-6 flex flex-col">
@@ -81,7 +91,7 @@ const [show, setShow] = useState(false)
           <input type="checkbox"  onClick={() => setShow((prev) => !prev)} />
           <p>Show password</p>
         </div>
-      <Button type="submit" className="w-full">let's go</Button>
+      <Button onClick={sendOPT} className="w-full">let's go</Button>
     </div>
   );
 };

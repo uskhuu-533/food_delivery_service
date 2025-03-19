@@ -47,10 +47,10 @@ const RegistrationForm = () => {
     router.push("/login");
   };
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const data = await postNewUser({email:values.email, password:values.password});
-    if (data?.status === 200) {
-      router.push("/login");
-    }
+    // const data = await postNewUser({email:values.email, password:values.password});
+    // if (data?.status === 200) {
+    //   router.push("/login");
+    // }
   };
   useEffect(() => {
     const getEmail = async () => {

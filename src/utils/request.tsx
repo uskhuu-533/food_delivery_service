@@ -10,9 +10,9 @@ type User = {
     password: string;
   };
 
-// const URL = "http://localhost:3000"
+const URL = "http://localhost:3000"
 // const URL = "https://food-service-cyan.vercel.app"  
-const URL = "https://food-backend-8ud7.onrender.com"
+// const URL = "https://food-backend-8ud7.onrender.com"
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
@@ -112,14 +112,7 @@ export const getCartItems = async (itemId: string) => {
   }
 };
 
-export const getFoodByOrder = async (item: Item) => {
-  try {
-    const res = await axios.get(`${URL}/food/orderitem/${item.food}`);    
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 export const getUserAddress = async () => {
   const token = localStorage.getItem("user");

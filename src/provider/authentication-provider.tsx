@@ -17,17 +17,7 @@ export const AuthenticationProvider = ({
     if (!token) {
       router.push("/login");
     }
-    const auth = async () => {
-      try {
-        const response = await getUserEmail();
-        if (response?.status !== 200) {
-          router.push("/login");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    auth();
+ 
     setLoading(false);
   }, []);
 
