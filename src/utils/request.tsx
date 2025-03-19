@@ -11,7 +11,8 @@ type User = {
   };
 
 // const URL = "http://localhost:3000"
-const URL = "https://food-service-cyan.vercel.app"  
+// const URL = "https://food-service-cyan.vercel.app"  
+const URL = "https://food-backend-8ud7.onrender.com"
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);

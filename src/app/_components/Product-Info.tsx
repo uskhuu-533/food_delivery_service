@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -95,13 +96,13 @@ export function ProductInfo({ food }: Props) {
                   </button>
                 </div>
               </div>
-              <Button
-                className="w-full rounded-full"
+              <DialogClose
+                className="bg-black text-white px-4 py-2 rounded-full"
                 type="submit"
                 onClick={addToCart}
               >
                 Add to cart
-              </Button>
+              </DialogClose>
             </div>
           </div>
         </div>
