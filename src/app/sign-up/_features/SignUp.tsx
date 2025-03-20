@@ -1,19 +1,15 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 import { getUserEmail, postNewUser } from "@/utils/request";
 import { useRouter } from "next/navigation";
 import { RegistrationEmailInput } from "../_components/Email";
 import { RegistrationPasswordInput } from "../_components/Password";
+import OTP from "../_components/EmailVerification";
 
-type User = {
-  email: string;
-  password: string;
-};
 const formSchema = z
   .object({
     email: z
@@ -35,28 +31,30 @@ const formSchema = z
 const RegistrationForm = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver :zodResolver(formSchema),
-    defaultValues : {
-      email : "",
-      password : "",
-      confirm : ""
-    }
-  })
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirm: "",
+    },
+  });
   const [step, setStep] = useState<number>(1);
   const goLoginPage = () => {
     router.push("/login");
   };
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // const data = await postNewUser({email:values.email, password:values.password});
-    // if (data?.status === 200) {
-    //   router.push("/login");
-    // }
+    const data = await postNewUser({
+      email: values.email,
+      password: values.password,
+    });
+    if (data?.status === 200) {
+      setStep(3);
+    }
   };
   useEffect(() => {
     const getEmail = async () => {
-      const token = localStorage.getItem("user");
       try {
-        const response = await getUserEmail()
+        const response = await getUserEmail();
         if (response?.status === 200) {
           router.push("/");
         }
@@ -71,20 +69,18 @@ const RegistrationForm = () => {
     <div className="w-[40%] flex items-center justify-center">
       <div className="w-[80%] flex flex-col h-fit gap-6">
         <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} >
-          {step === 1 ? (
-          <RegistrationEmailInput
-            setStep={setStep}
-            form={form}
-          />
-        ) : (
-          <RegistrationPasswordInput
-            setStep={setStep}
-            form={form}
-          />
-        )}
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            {step === 1 && (
+              <RegistrationEmailInput setStep={setStep} form={form} />
+            )}{" "}
+            {step === 2 && (
+              <RegistrationPasswordInput setStep={setStep} form={form} />
+            )}
           </form>
         </FormProvider>
+        {step === 3 && (
+              <OTP email={form.watch("email")} setStep={setStep}/>
+            )}
         <div className="flex w-full justify-center gap-4">
           <p>Already have an account?</p>
           <p onClick={goLoginPage} className="text-[#2563EB]">

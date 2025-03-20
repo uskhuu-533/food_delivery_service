@@ -4,8 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
-import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner"
 import { AuthenticationProvider } from "@/provider/authentication-provider";
+import { UserProvider } from "@/provider/User-Provider";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +42,11 @@ export default function RootLayout({
         >
           <Suspense>
             <NuqsAdapter>
-              <AuthenticationProvider>{children}</AuthenticationProvider>
+              <AuthenticationProvider>
+                <UserProvider>{children}
+                  <Toaster />
+                </UserProvider>
+              </AuthenticationProvider>
             </NuqsAdapter>
           </Suspense>
         </ThemeProvider>

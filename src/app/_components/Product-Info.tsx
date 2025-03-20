@@ -29,9 +29,8 @@ type food = {
 export function ProductInfo({ food }: Props) {
   const [count, setCount] = useState(1);
   const addToCart = async () => { 
-    try {
-   
-      const response =await addToCartReq(food, count)
+    try {   
+      await addToCartReq(food, count)
     } catch (error) {
       console.log(error);
     }

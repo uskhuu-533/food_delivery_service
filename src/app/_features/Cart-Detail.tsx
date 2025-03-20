@@ -6,6 +6,8 @@ import Logo from "../../components/icons/Logo";
 import CartItem from "../_components/Cart-Item";
 import { addToOrder, fetchFoodDetail, getUserCart } from "@/utils/request";
 import { Button } from "../../components/ui/button";
+import { useUser } from "@/provider/User-Provider";
+import { toast } from "sonner";
 
 type CartItemType = {
   food: food;
@@ -25,6 +27,9 @@ const CartDetail = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const {address, setOpenAddressDialog, openAddressDialog} = useUser()
+  console.log(openAddressDialog);
+  
   const getCartItems = async () => {
     setLoading(true);
     try {
@@ -44,6 +49,22 @@ const CartDetail = () => {
   useEffect(() => {
     getCartItems();
   }, []);
+  const addOrder =async () => {
+    if (address) {
+      await addToOrder(cartItems, totalPrice, getCartItems)
+    }else{
+      toast("Address not found, Add your address", {
+        description: "",
+        action: {
+          label: "add address",
+          onClick: () => {
+            setOpenAddressDialog(true);
+          },
+        },
+        position : "bottom-left"
+      })
+    }
+  }
 
   return (
     <div className="w-full h-full flex flex-col gap-6 lg:gap-3 ">
@@ -95,7 +116,7 @@ const CartDetail = () => {
         </div>
            <Button
              className="w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px]"
-             onClick={()=>addToOrder(cartItems, totalPrice, getCartItems)}
+             onClick={addOrder}
            >
              Check out
            </Button>

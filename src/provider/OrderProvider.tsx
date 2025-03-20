@@ -41,7 +41,6 @@ export const OrderProvider = ({
 }: {
   children: ReactNode;
 }) => {
-    const [page] = useQueryState("page", parseAsInteger.withDefault(1))
   const [data, setData] = useState<Order | null>(null);
   
   const [loadingOrder, setLoadingOrder] = useState(false);

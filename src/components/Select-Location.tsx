@@ -14,13 +14,16 @@ import { ChevronRight, MapPin, X } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { getUserAddress, putUser } from "@/utils/request";
+import { useUser } from "@/provider/User-Provider";
 
 const SelectLocation = () => {
+  const { openAddressDialog, setOpenAddressDialog } = useUser();
   const [location, setLocation] = useState("");
   const [address, setAddress] = useState(null);
   const onSubmit = async () => {
+    setOpenAddressDialog(false);
     try {
-      const response = await putUser(location)
+      const response = await putUser(location);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -35,7 +38,7 @@ const SelectLocation = () => {
     const getAddress = async () => {
       const token = localStorage.getItem("user");
       try {
-        const response = await getUserAddress()
+        const response = await getUserAddress();
         setAddress(response);
       } catch (error) {
         console.log(error);
@@ -44,9 +47,12 @@ const SelectLocation = () => {
     getAddress();
   }, []);
   return (
-    <Dialog>
+    <Dialog open={openAddressDialog}>
       <DialogTrigger asChild>
-        <div className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center">
+        <div
+          onClick={() => setOpenAddressDialog(true)}
+          className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center"
+        >
           <MapPin stroke="#EF4444" size={20} />
           {!address ? (
             <>
@@ -56,15 +62,26 @@ const SelectLocation = () => {
             </>
           ) : (
             <div className="flex items-center gap-10 max-w-[200px]">
-              <p className="text-black truncate text-[#18181B80] text-sm">{address}</p>
-              <X stroke="black" size={20}/>
+              <p className="text-black truncate text-[#18181B80] text-sm">
+                {address}
+              </p>
+              <X stroke="black" size={20} />
             </div>
           )}
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle> Delivery address</DialogTitle>
+          <DialogTitle
+            onClick={() => setOpenAddressDialog(false)}
+            className="flex justify-between"
+          >
+            {" "}
+            Delivery address
+            <Button>
+              <X />
+            </Button>
+          </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -76,7 +93,12 @@ const SelectLocation = () => {
           ></textarea>
         </div>
         <DialogFooter>
-          <Button className="bg-[none] border text-black">cancel</Button>
+          <Button
+            onClick={() => setOpenAddressDialog(false)}
+            className="bg-[none] border text-black"
+          >
+            cancel
+          </Button>
           <Button type="submit" onClick={onSubmit}>
             Deliver here
           </Button>

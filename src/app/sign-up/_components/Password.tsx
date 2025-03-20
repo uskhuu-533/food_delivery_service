@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { sendOneTimePassword } from "@/utils/authReq";
 import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
@@ -28,14 +29,7 @@ export const RegistrationPasswordInput = ({
 }: props) => {
 const [show, setShow] = useState(false)
 const sendOPT = async () => {
-  try {
-    const response = await axios.post('http://localhost:3000/opt/generate-otp', {email : form.watch("email")})
-    console.log(response);
-    
-  } catch (error) {
-    console.log(error);
-    
-  }
+  await sendOneTimePassword(form.watch("email"))
 }
 
   return (
@@ -91,7 +85,7 @@ const sendOPT = async () => {
           <input type="checkbox"  onClick={() => setShow((prev) => !prev)} />
           <p>Show password</p>
         </div>
-      <Button onClick={sendOPT} className="w-full">let's go</Button>
+      <Button onClick={sendOPT} type="submit" className="w-full">let's go</Button>
     </div>
   );
 };
