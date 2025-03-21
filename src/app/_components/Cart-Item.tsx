@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteItem, getFoodByOrder, putOrderItem } from "@/utils/request";
+import { deleteItem, putOrderItem } from "@/utils/request";
 import { Minus, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
