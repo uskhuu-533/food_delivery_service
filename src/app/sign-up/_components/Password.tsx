@@ -28,7 +28,7 @@ export const RegistrationPasswordInput = ({
   form
 }: props) => {
 const [show, setShow] = useState(false)
-const sendOPT = async () => {
+const sendOTP = async () => {
   await sendOneTimePassword(form.watch("email"))
 }
 
@@ -85,7 +85,7 @@ const sendOPT = async () => {
           <input type="checkbox"  onClick={() => setShow((prev) => !prev)} />
           <p>Show password</p>
         </div>
-      <Button onClick={sendOPT} type="submit" className="w-full">let's go</Button>
+      <Button onClick={sendOTP} type="submit" className="w-full">let's go</Button>
     </div>
   );
 };

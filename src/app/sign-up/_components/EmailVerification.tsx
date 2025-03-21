@@ -59,12 +59,6 @@ const OTP = ({ email, setStep }: props) => {
   }
   return (
     <div className="w-full h-full flex flex-col gap-5">
-      <button
-        onClick={() => setStep(2)}
-        className="w-9 h-9 border border-[#E4E4E7] rounded-md flex items-center justify-center"
-      >
-        <ChevronLeft />
-      </button>
       <div>
         <p className="font-bold text-2xl">Create your account</p>
         <p className="text-[#71717A]">

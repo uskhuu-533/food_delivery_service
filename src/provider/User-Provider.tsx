@@ -30,10 +30,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       const response = await getUserEmail();
       if (typeof response === "string") {
         setEmail(response);
+      }else{
+        rouder.push("/login")
       }
     } catch (error) {
       console.log(error);
-      rouder.push("login");
+      rouder.push("/login");
     }
   };
   const getAddress = async () => {
