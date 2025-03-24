@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -82,13 +81,13 @@ const OTP = ({ email }: props) => {
                   </InputOTP>
                 </FormControl>
                 <FormDescription>
-                  Please enter the one-time password sent to your phone. if you don't get code check your email spam
+                  Please enter the one-time password sent to your phone. if you don&apos;t get code check your email spam
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-           <Button type="submit" className="w-full">let's go</Button>
+           <Button type="submit" className="w-full">let&apos;s go</Button>
         </form>
       </FormProvider>
       </div>

@@ -1,20 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Category from "../../_components/Category";
 import CategoryFoods from "../../_features/Category-Food-List";
 import { useQueryState } from "nuqs";
-import { getCategory } from "@/utils/request";
-type category = {
-  title: string;
-  _id: string | null;
-};
-type food = {
-  food_image: string;
-  food_name: string;
-  food_description: string;
-  price: string;
-};
 
 const MenuContainerCategory = () => {
   const [categoryId] = useQueryState("categoryid");
