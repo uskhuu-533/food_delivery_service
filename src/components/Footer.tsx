@@ -2,7 +2,7 @@
 
 import { useCategory } from "@/provider/CategoryProvider";
 import LogoCont from "./Logo-Cont";
-import { Facebook, FacebookIcon, Instagram } from "lucide-react";
+import { FacebookIcon, Instagram } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const Footer = () => {

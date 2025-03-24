@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { getUserEmail, postNewUser } from "@/utils/request";
 import { useRouter } from "next/navigation";
 import { RegistrationEmailInput } from "../_components/Email";
@@ -79,7 +78,7 @@ const RegistrationForm = () => {
           </form>
         </FormProvider>
         {step === 3 && (
-              <OTP email={form.watch("email")} setStep={setStep}/>
+              <OTP email={form.watch("email")} />
             )}
         <div className="flex w-full justify-center gap-4">
           <p>Already have an account?</p>

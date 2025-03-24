@@ -28,7 +28,7 @@ const CartDetail = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
   const { setLoading } = useLoading();
-  const { address, setOpenAddressDialog, openAddressDialog } = useUser();
+  const { address, setOpenAddressDialog} = useUser();
   const getCartItems = async () => {
     try {
       const response = await getUserCart();

@@ -29,8 +29,8 @@ const OrderHistory = () => {
               <Logo />
               <div className="text-lg font-semibold">No Orders Yet? </div>
               <div className="text-[#71717A] text-center text-sm">
-                🍕 "You haven't placed any orders yet. Start exploring our menu
-                and satisfy your cravings!"
+                🍕 &quot;You haven&apos;t placed any orders yet. Start exploring our menu
+                and satisfy your cravings!&quot;
               </div>
             </div>
             <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">

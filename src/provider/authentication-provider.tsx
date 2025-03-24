@@ -1,6 +1,5 @@
 "use client";
 
-import { getUserEmail } from "@/utils/request";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

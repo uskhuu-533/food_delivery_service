@@ -1,7 +1,4 @@
 import axios from "axios";
-type Item = {
-  food: string;
-};
 type food = {
   _id: string;
 };
@@ -27,7 +24,7 @@ export const getFood = async (category: string) => {
 export const addToOrder = async (
   cartItems: food[],
   totalPrice: number,
-  getCartItems: Function
+  getCartItems : () => Promise<void>
 ) => {
   if (cartItems.length === 0) return;
   try {

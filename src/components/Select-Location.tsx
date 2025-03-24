@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { ChevronRight, MapPin, X } from "lucide-react";
 
-import { useEffect, useState } from "react";
-import { getUserAddress, putUser } from "@/utils/request";
+import { useState } from "react";
+import { putUser } from "@/utils/request";
 import { useUser } from "@/provider/User-Provider";
 
 const SelectLocation = () => {
-  const { openAddressDialog, setOpenAddressDialog, address, getAddress } = useUser();
+  const { openAddressDialog, setOpenAddressDialog, address, getAddress } =
+    useUser();
   const [location, setLocation] = useState("");
 
   const onSubmit = async () => {
@@ -25,7 +26,7 @@ const SelectLocation = () => {
     try {
       const response = await putUser(location);
       console.log(response);
-      getAddress()
+      getAddress();
     } catch (error) {
       console.log(error);
     }

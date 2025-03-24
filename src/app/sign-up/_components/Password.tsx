@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { sendOneTimePassword } from "@/utils/authReq";
-import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -15,14 +14,8 @@ type props = {
       email: string;
       password: string;
       confirm: string;
-  }, any, undefined>
+  }>
 }
-
-type User = {
-  email: string;
-  password: string;
-};
-
 export const RegistrationPasswordInput = ({
   setStep,
   form
@@ -85,7 +78,7 @@ const sendOTP = async () => {
           <input type="checkbox"  onClick={() => setShow((prev) => !prev)} />
           <p>Show password</p>
         </div>
-      <Button onClick={sendOTP} type="submit" className="w-full">let's go</Button>
+      <Button onClick={sendOTP} type="submit" className="w-full">let&apos;s go</Button>
     </div>
   );
 };

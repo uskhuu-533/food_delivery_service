@@ -9,10 +9,6 @@ type Props = {
   category: string | null;
   categoryTitle : string | undefined
 };
-type category = {
-  title: string;
-  _id: string | null;
-};
 
 type food = {
   food_image: string;

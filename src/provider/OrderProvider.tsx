@@ -1,7 +1,6 @@
 "use client";
 
 import { getOrders } from "@/utils/request";
-import { parseAsInteger, useQueryState } from "nuqs";
 import {
   createContext,
   ReactNode,

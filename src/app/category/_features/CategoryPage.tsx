@@ -18,20 +18,6 @@ type food = {
 
 const MenuContainerCategory = () => {
   const [categoryId] = useQueryState("categoryid");
-  const [categories, setCategories] = useState<category[]>([]);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await getCategory();
-
-        setCategories(response);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCategory();
-  }, []);
 
   return (
     <div className="w-screen h-fit flex dark:text-white justify-center">

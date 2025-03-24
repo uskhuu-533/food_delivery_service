@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,10 +28,9 @@ const FormSchema = z.object({
 });
 type props = {
   email: string;
-  setStep: (step: number) => void;
 };
 
-const OTP = ({ email, setStep }: props) => {
+const OTP = ({ email }: props) => {
   const router = useRouter()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

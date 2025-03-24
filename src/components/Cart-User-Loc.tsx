@@ -1,4 +1,4 @@
-import {ShoppingCart, User } from "lucide-react"
+
 import SelectLocation from "./Select-Location"
 import OrderDetail from "../app/_features/Order-Details"
 import UserDetail from "./User"

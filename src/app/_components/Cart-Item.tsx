@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 type Props = {
-  food : food
-  getCartItems: Function;
-  itemId : string
-  quantity : number
+  food: food;
+  getCartItems(): Promise<void>;
+  itemId: string;
+  quantity: number;
 };
 
 type food = {
@@ -20,15 +20,10 @@ type food = {
   _id: string;
 };
 
-
 const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
-
-
-
   const [localQuantity, setLocalQuantity] = useState(quantity);
   const [debouncedQuantity] = useDebounce(localQuantity, 1000);
 
-  
   useEffect(() => {
     setLocalQuantity(quantity);
   }, [quantity]);
@@ -41,8 +36,8 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
 
       if (delta === 0) return;
       try {
-        await putOrderItem(itemId, delta)
-        getCartItems()
+        await putOrderItem(itemId, delta);
+        getCartItems();
       } catch (error) {
         console.log(error);
         setLocalQuantity(quantity);
@@ -63,9 +58,9 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
 
   const removeItem = async () => {
     try {
-      const response = await deleteItem(itemId)
+      const response = await deleteItem(itemId);
       console.log(response);
-      
+
       getCartItems();
     } catch (error) {
       console.log(error);
