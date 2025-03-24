@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 
 import Logo from "../../components/icons/Logo";
 import CartItem from "../_components/Cart-Item";
-import { addToOrder, fetchFoodDetail, getUserCart } from "@/utils/request";
+import { addToOrder, getUserCart } from "@/utils/request";
 import { Button } from "../../components/ui/button";
 import { useUser } from "@/provider/User-Provider";
 import { toast } from "sonner";
+import { useLoading } from "@/provider/LoaderProvider";
 
 type CartItemType = {
   food: food;
@@ -25,22 +26,15 @@ type food = {
 
 const CartDetail = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-  const [loading, setLoading] = useState(true);
 
+  const { setLoading } = useLoading();
   const { address, setOpenAddressDialog, openAddressDialog } = useUser();
-  console.log(openAddressDialog);
-
   const getCartItems = async () => {
-    setLoading(true);
     try {
       const response = await getUserCart();
       setCartItems(response);
-
-      setLoading(false);
-      console.log(loading);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
   };
   const totalPrice = cartItems?.reduce(
@@ -52,8 +46,14 @@ const CartDetail = () => {
     getCartItems();
   }, []);
   const addOrder = async () => {
+    if (cartItems.length === 0) return;
     if (address) {
+      setLoading(true);
       await addToOrder(cartItems, totalPrice, getCartItems);
+      setLoading(false);
+      toast(`Checked out ${cartItems.length} items`, {
+        position: "top-center",
+      });
     } else {
       toast("Address not found, Add your address", {
         description: "",
@@ -72,7 +72,6 @@ const CartDetail = () => {
     <div className="w-full h-full flex flex-col gap-6 lg:gap-3 ">
       <div className="p-4 w-full rounded-xl h-[60%] bg-[#FFFFFF] flex flex-col gap-5 overflow-scroll">
         <h1 className="font-bold text-xl lg:text-md">My cart</h1>
-
         {cartItems.length === 0 ? (
           <div className="py-8 px-12 w-full flex flex-col items-center gap-1 bg-[#F4F4F5] rounded-md">
             <Logo />
@@ -115,7 +114,9 @@ const CartDetail = () => {
           <p>{totalPrice + 0.99}</p>
         </div>
         <Button
-          className="w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px]"
+          className={`w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px] ${
+            cartItems.length < 1 && "cursor-not-allowed"
+          }`}
           onClick={addOrder}
         >
           Check out

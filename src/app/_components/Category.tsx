@@ -4,20 +4,14 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useCategory } from "@/provider/CategoryProvider";
 import { useRouter } from "next/navigation";
 import { useQueryState } from "nuqs";
-type Props = {
-  categories: category[];
-};
-type category = {
-  title: string;
-  _id: string | null;
-};
-const Category = ({ categories }: Props) => {
+
+const Category = () => {
   const router = useRouter();
-
+  const {categories} = useCategory()
   const [categoryId, setCategory] = useQueryState("categoryid");
-
   const handleCategory = (_id: string | null) => {
     if (window.location.pathname === "/") {
       router.push(`/category?categoryid=${_id}`);
@@ -31,7 +25,7 @@ const Category = ({ categories }: Props) => {
       <p className="text-2xl font-semibold">Categories</p>
       <Carousel>
         <CarouselContent className="gap-[10px] ml-4">
-          {categories?.map((category: category, index) => (
+          {categories.filter((category)=>category.food_count.length > 0).map((category, index) => (
             <CarouselItem
               onClick={() => handleCategory(category._id)}
               className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full"

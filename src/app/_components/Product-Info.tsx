@@ -1,5 +1,6 @@
 "use client";
 
+import Logo from "@/components/icons/Logo";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +16,7 @@ import { addToCartReq } from "@/utils/request";
 
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type Props = {
   food: food;
@@ -28,18 +30,26 @@ type food = {
 };
 export function ProductInfo({ food }: Props) {
   const [count, setCount] = useState(1);
-  const addToCart = async () => { 
-    try {   
-      await addToCartReq(food, count)
-    } catch (error) {
-      console.log(error);
+  const addToCart = async () => {
+    const response = await addToCartReq(food, count);
+    if (response?.status === 200) {
+      toast(
+        <div className="flex text-xl text-[#EF4444] pl-10 items-center gap-5 justify-center">
+          <Logo /> 
+          <p >Added to cart</p>
+        </div>,
+        {
+          description: "",
+          position: "top-center",
+        }
+      );
     }
   };
   const totalPrice = parseInt(food.price) * count;
   const minusItem = () => {
-    if (count<=1) return
-    setCount((prev)=> prev-1) 
-  }
+    if (count <= 1) return;
+    setCount((prev) => prev - 1);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -89,7 +99,7 @@ export function ProductInfo({ food }: Props) {
                   </div>
                   <button
                     className="border rounded-full  py-[2px] px-4"
-                    onClick={() => setCount((prev)=>prev+1)}
+                    onClick={() => setCount((prev) => prev + 1)}
                   >
                     <Plus size={12} />
                   </button>

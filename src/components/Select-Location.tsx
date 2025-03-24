@@ -17,14 +17,15 @@ import { getUserAddress, putUser } from "@/utils/request";
 import { useUser } from "@/provider/User-Provider";
 
 const SelectLocation = () => {
-  const { openAddressDialog, setOpenAddressDialog } = useUser();
+  const { openAddressDialog, setOpenAddressDialog, address, getAddress } = useUser();
   const [location, setLocation] = useState("");
-  const [address, setAddress] = useState(null);
+
   const onSubmit = async () => {
     setOpenAddressDialog(false);
     try {
       const response = await putUser(location);
       console.log(response);
+      getAddress()
     } catch (error) {
       console.log(error);
     }
@@ -34,18 +35,7 @@ const SelectLocation = () => {
     const value = e.target.value;
     setLocation(value);
   };
-  useEffect(() => {
-    const getAddress = async () => {
-      const token = localStorage.getItem("user");
-      try {
-        const response = await getUserAddress();
-        setAddress(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getAddress();
-  }, []);
+
   return (
     <Dialog open={openAddressDialog}>
       <DialogTrigger asChild>
