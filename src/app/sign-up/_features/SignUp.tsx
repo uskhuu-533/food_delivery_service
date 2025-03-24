@@ -62,7 +62,7 @@ const RegistrationForm = () => {
       }
     };
     getEmail();
-  }, []);
+  }, [router]);
 
   return (
     <div className="w-[40%] flex items-center justify-center">

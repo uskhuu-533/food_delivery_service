@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { deleteItem, putOrderItem } from "@/utils/request";
@@ -45,7 +46,7 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
     };
 
     updateQuantity();
-  }, [debouncedQuantity, itemId, quantity]);
+  }, [debouncedQuantity, getCartItems, itemId, quantity]);
 
   const plusItem = () => {
     setLocalQuantity((prev) => prev + 1);

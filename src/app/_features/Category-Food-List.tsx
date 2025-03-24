@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -33,6 +34,7 @@ const CategoryFoods = ({ category, categoryTitle }: Props) => {
   
   useEffect(() => {
     getFoods();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId]);
 
   return (

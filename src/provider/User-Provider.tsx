@@ -21,7 +21,7 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const rouder = useRouter();
+  const router = useRouter();
   const [openAddressDialog, setOpenAddressDialog] = useState(false)
   const [address, setAddress] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {
       console.log(error);
-      rouder.push("/login");
+      router.push("/login");
     }
   };
   const getAddress = async () => {
@@ -45,7 +45,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getEmail();
     getAddress();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
   return (
     <UserContext.Provider value={{ email, address, getAddress, getEmail, setOpenAddressDialog, openAddressDialog }}>
       {children}

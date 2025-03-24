@@ -18,7 +18,7 @@ export const AuthenticationProvider = ({
     }
  
     setLoading(false);
-  }, []);
+  }, [router]);
 
   if (loading) {
     return <div>...loading</div>;
