@@ -10,7 +10,7 @@ import { useQueryState } from "nuqs";
 
 const Category = () => {
   const router = useRouter();
-  const {categories} = useCategory()
+  const { categories } = useCategory();
   const [categoryId, setCategory] = useQueryState("categoryid");
   const handleCategory = (_id: string | null) => {
     if (window.location.pathname === "/") {
@@ -25,16 +25,22 @@ const Category = () => {
       <p className="text-2xl font-semibold">Categories</p>
       <Carousel>
         <CarouselContent className="gap-[10px] ml-4">
-          {categories.filter((category)=>category.food_count.length > 0).map((category, index) => (
-            <CarouselItem
-              onClick={() => handleCategory(category._id)}
-              className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full"
-              key={index}
-              style={categoryId === category._id ? {background:"#EF4444", color:"#FFFFFF"}:{}}
-            >
-              {category.title}
-            </CarouselItem>
-          ))}
+          {categories
+            .filter((category) => category.food_count.length > 0)
+            .map((category, index) => (
+              <CarouselItem
+                onClick={() => handleCategory(category._id)}
+                className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full"
+                key={index}
+                style={
+                  categoryId === category._id
+                    ? { background: "#EF4444", color: "#FFFFFF" }
+                    : {}
+                }
+              >
+                {category.title}
+              </CarouselItem>
+            ))}
         </CarouselContent>
       </Carousel>
     </div>
