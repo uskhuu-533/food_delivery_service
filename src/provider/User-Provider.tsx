@@ -1,6 +1,7 @@
 "use client";
 
-import { getUserAddress, getUserEmail } from "@/utils/request";
+import {  getUserEmail } from "@/utils/request";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
   createContext,
@@ -9,46 +10,39 @@ import {
   useEffect,
   useState,
 } from "react";
-
+type User = {
+  email : string
+  address : string
+}
 type UserContextType = {
-  email: string;
-  address: string | null;
-  getAddress(): Promise<void>;
-  getEmail(): Promise<void>;
+  user: User;
   openAddressDialog : boolean
   setOpenAddressDialog : (openAddressDialog:boolean) => void
+  refetchUser : ()=>void
 };
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [openAddressDialog, setOpenAddressDialog] = useState(false)
-  const [address, setAddress] = useState<string | null>(null);
-  const [email, setEmail] = useState("");
-  const getEmail = async () => {
-    try {
-      const response = await getUserEmail();
-      if (typeof response === "string") {
-        setEmail(response);
-      }
-    } catch (error) {
-      console.log(error);
-      router.push("/login");
-    }
-  };
-  const getAddress = async () => {
-    const response = await getUserAddress();
-    if (typeof response === "string") {
-      setAddress(response);
-    }
-  };
-  useEffect(() => {
-    getEmail();
-    getAddress();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+ const {data : user , refetch : refetchUser, isLoading } = useQuery({
+  queryKey : ["userEmail"],
+  queryFn : ()=> getUserEmail(),
+ })
+ useEffect(()=>{
+  if (!user) {
+    router.push('/login')
+  }else{
+    router.push('/')
+  }
+ },[router, user])
+ if (isLoading) {
   return (
-    <UserContext.Provider value={{ email, address, getAddress, getEmail, setOpenAddressDialog, openAddressDialog }}>
+    <div>Loadoing...</div>
+  )
+ }
+  return (
+    <UserContext.Provider value={{user, refetchUser, setOpenAddressDialog, openAddressDialog }}>
       {children}
     </UserContext.Provider>
   );

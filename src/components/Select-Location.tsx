@@ -17,7 +17,7 @@ import { putUser } from "@/utils/request";
 import { useUser } from "@/provider/User-Provider";
 
 const SelectLocation = () => {
-  const { openAddressDialog, setOpenAddressDialog, address, getAddress } =
+  const { openAddressDialog, setOpenAddressDialog, user, refetchUser } =
     useUser();
   const [location, setLocation] = useState("");
 
@@ -26,7 +26,7 @@ const SelectLocation = () => {
     try {
       const response = await putUser(location);
       console.log(response);
-      getAddress();
+      refetchUser();
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +45,7 @@ const SelectLocation = () => {
           className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center"
         >
           <MapPin stroke="#EF4444" size={20} />
-          {!address ? (
+          {!user.address ? (
             <>
               <div className="text-[#EF4444]">Delivery address</div>
               <div className="text-[#18181B80] ">Add location</div>
@@ -54,7 +54,7 @@ const SelectLocation = () => {
           ) : (
             <div className="flex items-center gap-10 max-w-[200px]">
               <p className="text-black truncate text-[#18181B80] text-sm">
-                {address}
+                {user.address}
               </p>
               <X stroke="black" size={20} />
             </div>

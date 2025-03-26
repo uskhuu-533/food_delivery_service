@@ -46,7 +46,8 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
     };
 
     updateQuantity();
-  }, [debouncedQuantity, getCartItems, itemId, quantity]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuantity, itemId, quantity]);
 
   const plusItem = () => {
     setLocalQuantity((prev) => prev + 1);
