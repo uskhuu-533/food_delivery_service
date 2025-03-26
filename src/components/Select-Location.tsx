@@ -45,7 +45,7 @@ const SelectLocation = () => {
           className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center"
         >
           <MapPin stroke="#EF4444" size={20} />
-          {!user.address ? (
+          {!user?.address ? (
             <>
               <div className="text-[#EF4444]">Delivery address</div>
               <div className="text-[#18181B80] ">Add location</div>

@@ -42,7 +42,7 @@ const Login = () => {
   const checkPassword = async (values: z.infer<typeof formSchema>) => {
     const data = await checkPasswordLogin(values);
     if (data?.status === 200) {
-      localStorage.setItem("user", data.data);
+      localStorage.setItem("user", data.data.token);
       router.push("/");
     }
   };

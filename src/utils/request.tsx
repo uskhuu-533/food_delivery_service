@@ -5,6 +5,7 @@ type food = {
 type User = {
     email: string;
     password: string;
+    address : string
   };
 
 // const URL = "http://localhost:3000"
@@ -61,14 +62,14 @@ export const addToOrder = async (
 export const getUserEmail = async () => {
   const token = localStorage.getItem("user");
   try {
-    const response = await axios.get(`${URL}/users`, {
+    const response = await axios.get<User>(`${URL}/users`, {
       headers: {
         Authorization: token,
       },
     });
     console.log(response);
     
-    return response.data;
+    return response.data || null
   } catch (error) {
     console.log(error);
   }

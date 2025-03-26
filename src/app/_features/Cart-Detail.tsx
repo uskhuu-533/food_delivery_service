@@ -47,7 +47,7 @@ const CartDetail = () => {
   }, []);
   const addOrder = async () => {
     if (cartItems.length === 0) return;
-    if (user.address) {
+    if (user?.address) {
       setLoading(true);
       await addToOrder(cartItems, totalPrice, getCartItems);
       setLoading(false);

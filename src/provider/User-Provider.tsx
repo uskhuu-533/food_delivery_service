@@ -15,7 +15,7 @@ type User = {
   address : string
 }
 type UserContextType = {
-  user: User;
+  user: User | null
   openAddressDialog : boolean
   setOpenAddressDialog : (openAddressDialog:boolean) => void
   refetchUser : ()=>void
@@ -25,7 +25,7 @@ const UserContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const [openAddressDialog, setOpenAddressDialog] = useState(false)
- const {data : user , refetch : refetchUser, isLoading } = useQuery({
+ const {data : user = null , refetch : refetchUser, isLoading } = useQuery({
   queryKey : ["userEmail"],
   queryFn : ()=> getUserEmail(),
  })

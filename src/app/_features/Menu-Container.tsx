@@ -1,11 +1,18 @@
 "use client";
 
+import { useEffect } from "react";
 import Category from "../_components/Category";
 import CategoryFoods from "./Category-Food-List";
 import { useCategory } from "@/provider/CategoryProvider";
+import { useUser } from "@/provider/User-Provider";
 
 const MenuContainer = () => {
   const { categories } = useCategory();
+  const { refetchUser } = useUser()
+  useEffect(()=>{
+    refetchUser()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   return (
     <div className="w-screen h-fit flex dark:text-white justify-center">
       <div className="max-w-[1440px] w-full h-fit flex py-8 flex-col gap-8">

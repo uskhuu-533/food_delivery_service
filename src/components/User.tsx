@@ -27,7 +27,7 @@ const UserDetail = () => {
           <Button variant="outline" className="rounded-full flex items-center w-11 h-full border-none justify-center bg-[#EF4444]"><User size={16} stroke="#FFFFFF"/></Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[188px] p-4 gap-2">
-          <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
+          <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={"bottom"} className="flex justify-center">
             <Button className="rounded-full" onClick={signOut}>Sign out</Button>
