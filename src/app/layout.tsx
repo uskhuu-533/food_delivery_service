@@ -43,15 +43,16 @@ export default function RootLayout({
           <Suspense>
             <NuqsAdapter>
               <QueryClientProvider client={queryClient}>
-                <AuthenticationProvider>
-                  <UserProvider>
-                    <LoadingProvider>
+                <LoadingProvider>
+                  <AuthenticationProvider>
+                    <UserProvider>
                       <CategoryProvider>{children}</CategoryProvider>
                       <ScreenLoader />
-                    </LoadingProvider>
-                    <Toaster />
-                  </UserProvider>
-                </AuthenticationProvider>
+
+                      <Toaster />
+                    </UserProvider>
+                  </AuthenticationProvider>
+                </LoadingProvider>
               </QueryClientProvider>
             </NuqsAdapter>
           </Suspense>

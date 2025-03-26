@@ -1,5 +1,6 @@
 "use client";
 
+import LoaderAuth from "@/components/LoaderAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,6 @@ export const AuthenticationProvider = ({
 }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const token = localStorage.getItem("user");
     if (!token) {
@@ -21,7 +21,7 @@ export const AuthenticationProvider = ({
   }, [router]);
 
   if (loading) {
-    return <div>...loading</div>;
+    return   <LoaderAuth/>
   }
 
   return children;

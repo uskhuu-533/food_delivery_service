@@ -1,5 +1,6 @@
 "use client";
 
+import LoaderAuth from "@/components/LoaderAuth";
 import {  getUserEmail } from "@/utils/request";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
  },[router, user])
  if (isLoading) {
   return (
-    <div>Loadoing...</div>
+    <LoaderAuth/>
   )
  }
   return (
