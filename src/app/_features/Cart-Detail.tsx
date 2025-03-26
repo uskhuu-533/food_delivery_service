@@ -9,6 +9,8 @@ import { Button } from "../../components/ui/button";
 import { useUser } from "@/provider/User-Provider";
 import { toast } from "sonner";
 import { useLoading } from "@/provider/LoaderProvider";
+import { useDebounceLoading } from "@/provider/DebounceLoaderProvider copy";
+import { LoaderIcon } from "lucide-react";
 
 type CartItemType = {
   food: food;
@@ -26,7 +28,7 @@ type food = {
 
 const CartDetail = () => {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-
+const {debounceLoading} = useDebounceLoading()
   const { setLoading } = useLoading();
   const { user, setOpenAddressDialog} = useUser();
   const getCartItems = async () => {
@@ -47,6 +49,7 @@ const CartDetail = () => {
   }, []);
   const addOrder = async () => {
     if (cartItems.length === 0) return;
+    if (debounceLoading) return
     if (user?.address) {
       setLoading(true);
       await addToOrder(cartItems, totalPrice, getCartItems);
@@ -111,12 +114,12 @@ const CartDetail = () => {
         </div>
         <div className="flex justify-between text-[#71717A]">
           <p>Total</p>
-          <p>{totalPrice + 0.99}</p>
+          {debounceLoading ? (<LoaderIcon className="animate-spin"/>):(<p>{totalPrice + 0.99}</p>)}
         </div>
         <Button
           className={`w-full py-2 rounded-full bg-[#EF4444] text-[#FFFFFF] lg:text-sm lg:py-[2px] ${
             cartItems.length < 1 && "cursor-not-allowed"
-          }`}
+          } ${debounceLoading && " cursor-not-allowed "}`}
           onClick={addOrder}
         >
           Check out

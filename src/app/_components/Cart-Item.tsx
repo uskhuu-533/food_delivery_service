@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useDebounceLoading } from "@/provider/DebounceLoaderProvider copy";
 import { deleteItem, putOrderItem } from "@/utils/request";
 import { Minus, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ type food = {
 };
 
 const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
+  const { setDebLoading} = useDebounceLoading()
   const [localQuantity, setLocalQuantity] = useState(quantity);
   const [debouncedQuantity] = useDebounce(localQuantity, 1000);
 
@@ -38,10 +40,12 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
       if (delta === 0) return;
       try {
         await putOrderItem(itemId, delta);
-        getCartItems();
+        await getCartItems();
       } catch (error) {
         console.log(error);
         setLocalQuantity(quantity);
+      }finally{
+        setDebLoading(false)
       }
     };
 
@@ -50,11 +54,13 @@ const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
   }, [debouncedQuantity, itemId, quantity]);
 
   const plusItem = () => {
+    setDebLoading(true)
     setLocalQuantity((prev) => prev + 1);
   };
 
   const minusItem = () => {
     if (localQuantity <= 1) return;
+    setDebLoading(true)
     setLocalQuantity((prev) => prev - 1);
   };
 

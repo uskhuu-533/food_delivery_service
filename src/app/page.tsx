@@ -3,9 +3,11 @@
 import Header from "@/components/Header";
 import MenuContainer from "@/app/_features/Menu-Container";
 import Footer from "@/components/Footer";
+import { DebounceLoadingProvider } from "@/provider/DebounceLoaderProvider copy";
 
 const Home = () => {
   return (
+    <DebounceLoadingProvider>
     <div >
       <Header/>
       <div className="flex w-full max-h-[800px] h-fit relative overflow-hidden">
@@ -18,6 +20,7 @@ const Home = () => {
       <MenuContainer />
       <Footer/>
     </div>
+    </DebounceLoadingProvider>
 
   );
 };
