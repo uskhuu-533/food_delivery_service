@@ -7,6 +7,10 @@ type User = {
     password: string;
     address : string
   };
+  type NewUser = {
+    email: string;
+    password: string;
+  }
 
 // const URL = "http://localhost:3000"
 // const URL = "https://food-service-cyan.vercel.app"  
@@ -219,7 +223,7 @@ export  const putUser = async (location:string) => {
     }
   };
 
-  export const postNewUser = async (newUser:User) => {
+  export const postNewUser = async (newUser:NewUser) => {
     try {
         const response = await axios.post(`${URL}/users`, newUser);
         console.log(response);

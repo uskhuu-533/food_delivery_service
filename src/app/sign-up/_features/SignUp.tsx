@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUserEmail, postNewUser } from "@/utils/request";
+import {  postNewUser } from "@/utils/request";
 import { useRouter } from "next/navigation";
 import { RegistrationEmailInput } from "../_components/Email";
 import { RegistrationPasswordInput } from "../_components/Password";
@@ -50,19 +50,7 @@ const RegistrationForm = () => {
       setStep(3);
     }
   };
-  useEffect(() => {
-    const getEmail = async () => {
-      try {
-        const response = await getUserEmail();
-        if (response?.status === 200) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getEmail();
-  }, [router]);
+
 
   return (
     <div className="w-[40%] flex items-center justify-center">
