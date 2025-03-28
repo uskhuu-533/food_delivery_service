@@ -25,7 +25,7 @@ type food = {
 const CartItem = ({ food, getCartItems, itemId, quantity }: Props) => {
   const { setDebLoading} = useDebounceLoading()
   const [localQuantity, setLocalQuantity] = useState(quantity);
-  const [debouncedQuantity] = useDebounce(localQuantity, 1000);
+  const [debouncedQuantity] = useDebounce(localQuantity, 500);
 
   useEffect(() => {
     setLocalQuantity(quantity);
