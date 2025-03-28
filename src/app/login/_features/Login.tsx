@@ -104,7 +104,9 @@ const Login = () => {
             </Button>
           </form>
         </FormProvider>
-
+        <p onClick={() => router.push("/resetpassword")} className="text-[#2563EB]">
+            forgot password
+          </p>
         <div className="flex w-full justify-center gap-4">
           <p>Don&apos;t have an account?</p>
           <p onClick={() => router.push("/sign-up")} className="text-[#2563EB]">
