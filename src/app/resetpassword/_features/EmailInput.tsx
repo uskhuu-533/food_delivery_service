@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useState } from "react";
 
 const EmailInput = ({
   email,
@@ -11,6 +12,7 @@ const EmailInput = ({
   setEmail: (email: string) => void;
   setStep: (step: number) => void;
 }) => {
+  const [isError, setError] = useState(false)
     const sendOneTimePassword = async (email: string) => {
         try {
           const response = await axios.post(
@@ -22,6 +24,7 @@ const EmailInput = ({
           }
         } catch (error) {
           console.log(error);
+          setError(true)
         }
       };
   const step2 = async () => {
@@ -33,7 +36,10 @@ const EmailInput = ({
   return (
     <div className="flex flex-col gap-5">
       <p>Enter your email</p>
-      <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+      <div>
+      <Input placeholder="enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
+      {isError && (<label className="text-red-400 text-sm">User not found</label>)}
+      </div>
       <Button onClick={step2}>let&apos;s go</Button>
     </div>
   );

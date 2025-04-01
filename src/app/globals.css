@@ -4,7 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: var(--Tailwind-Neutral---Text-color-700, #404040);
+  /* background: var(--Tailwind-Neutral---Text-color-700, #404040); */
 }
 
 @layer base {

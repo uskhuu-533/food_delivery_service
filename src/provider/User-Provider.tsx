@@ -24,11 +24,13 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
+
   const router = useRouter();
   const [openAddressDialog, setOpenAddressDialog] = useState(false)
  const {data : user = null , refetch : refetchUser, isLoading } = useQuery({
-  queryKey : ["userEmail"],
-  queryFn : ()=> getUserEmail(),
+  queryKey : ["user"],
+  queryFn : getUserEmail,
+  staleTime: 1000 * 60 * 10,
  })
  useEffect(()=>{
   if (!user) {
@@ -36,7 +38,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }else{
     router.push('/')
   }
- },[router, user])
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ },[])
  if (isLoading) {
   return (
     <LoaderAuth/>

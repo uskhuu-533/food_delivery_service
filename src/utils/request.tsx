@@ -12,9 +12,9 @@ type User = {
     password: string;
   }
 
-// const URL = "http://localhost:3000"
+const URL = "http://localhost:3000"
 // const URL = "https://food-service-cyan.vercel.app"  
-const URL = "https://food-backend-8ud7.onrender.com"
+// const URL = "https://food-backend-8ud7.onrender.com"
 export const getFood = async (category: string) => {
   try {
     const response = await axios.get(`${URL}/food/${category}`);
@@ -76,15 +76,15 @@ export const getUserEmail = async () => {
     return response.data || null
   } catch (error) {
     console.log(error);
+    return null
   }
 };
 export const checkPasswordLogin = async (form: object) => {
   try {
     const response = await axios.post(`${URL}/users/login`, form);
       return response
-    
-  } catch (err) {
-    console.error("Error posting user:", err);
+  } catch (error) {
+    console.log("Error posting user:", error);
   }
 };
 

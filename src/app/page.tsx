@@ -8,9 +8,9 @@ import { DebounceLoadingProvider } from "@/provider/DebounceLoaderProvider copy"
 const Home = () => {
   return (
     <DebounceLoadingProvider>
-    <div >
+    <div className="bg-[#404040] w-screen">
       <Header/>
-      <div className="flex w-full max-h-[800px] h-fit relative overflow-hidden">
+      <div className="flex w-full max-h-[700px] h-fit relative overflow-hidden">
         <img
           className="w-full h-auto  lg:mt-0 mt-12"
           src={`/mainbg.jpg`}

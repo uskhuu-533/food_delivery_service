@@ -6,7 +6,7 @@ export const sendOneTimePassword = async (email: string) => {
       `${URL}/opt/generate-otp`,
       { email: email }
     );
-    console.log(response);
+    return response
   } catch (error) {
     console.log(error);
   }

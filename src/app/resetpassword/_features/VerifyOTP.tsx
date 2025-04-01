@@ -55,9 +55,10 @@ const VerifyOTP = ({ email, setStep }: props) => {
     }
   }
   return (
-    <div className="w-full h-full flex flex-col gap-5">
+    <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
+      <div className="w-[400px]">
       <div>
-        <p className="font-bold text-2xl">{email}</p>
+        <p className="font-bold text-md">Send your {email} email one code</p>
       </div>
       <div className="w-full h-full flex itmes-center justify-center">
       <FormProvider {...form}>
@@ -88,7 +89,7 @@ const VerifyOTP = ({ email, setStep }: props) => {
         </form>
       </FormProvider>
       </div>
-     
+      </div>
     </div>
   );
 };

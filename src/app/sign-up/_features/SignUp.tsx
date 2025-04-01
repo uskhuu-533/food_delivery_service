@@ -70,7 +70,7 @@ const RegistrationForm = () => {
             )}
         <div className="flex w-full justify-center gap-4">
           <p>Already have an account?</p>
-          <p onClick={goLoginPage} className="text-[#2563EB]">
+          <p onClick={goLoginPage} className="text-[#2563EB] cursor-pointer">
             Log in
           </p>
         </div>

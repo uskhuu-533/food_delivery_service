@@ -32,12 +32,12 @@ type CategoryContextType = {
 const CategoryContext = createContext<CategoryContextType | null>(null);
 
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
-  const { data: categories = [], refetch : refetchCategory } = useQuery({
+  const { data: data = [], refetch : refetchCategory } = useQuery({
     queryKey: ["foods"],
     queryFn: () => getCategory(),
     staleTime: 1000 * 60 * 5,
   });
-
+const categories = data.categories
   return (
     <CategoryContext.Provider value={{ categories, refetchCategory }}>
       {children}

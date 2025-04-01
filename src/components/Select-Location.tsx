@@ -67,9 +67,8 @@ const SelectLocation = () => {
             onClick={() => setOpenAddressDialog(false)}
             className="flex justify-between"
           >
-            {" "}
             Delivery address
-            <Button>
+            <Button >
               <X />
             </Button>
           </DialogTitle>

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 import { ChevronLeft } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 type props = {
@@ -16,10 +17,18 @@ type props = {
 
 
 export const RegistrationEmailInput = ({ setStep, form}: props) => {
-  const jumpToPassword = () => {
+  const jumpToPassword = async () => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (regex.test(form.watch('email'))) {
-      setStep(2);
+      try {
+        const response = await axios.post(`http://localhost:3000/users/email`, {email : form.watch('email')})
+        console.log(response);
+        setStep(2);
+      } catch (error) {
+        console.log(error);
+        form.setError('email', {message:"email used"})
+      }
+   
     } 
   };
 

@@ -22,7 +22,7 @@ export const RegistrationPasswordInput = ({
 }: props) => {
 const [show, setShow] = useState(false)
 const sendOTP = async () => {
-  await sendOneTimePassword(form.watch("email"))
+await sendOneTimePassword(form.watch("email"))  
 }
 
   return (

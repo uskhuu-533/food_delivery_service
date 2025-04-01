@@ -8,7 +8,7 @@ import { DebounceLoadingProvider } from "@/provider/DebounceLoaderProvider copy"
 export default function Home() {
   return (
      <DebounceLoadingProvider>
-    <div>
+    <div className="bg-[#404040]">
       <Header />
       <MenuContainerCategory />
       <Footer />
