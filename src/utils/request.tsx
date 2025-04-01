@@ -201,6 +201,7 @@ export const getCategory = async () => {
     return response.data;
   } catch (err) {
     console.log(err);
+    return []
   }
 };
 

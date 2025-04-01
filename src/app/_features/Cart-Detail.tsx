@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { useLoading } from "@/provider/LoaderProvider";
 import { useDebounceLoading } from "@/provider/DebounceLoaderProvider copy";
 import { LoaderIcon } from "lucide-react";
+import { SheetClose } from "@/components/ui/sheet";
 
 type CartItemType = {
   food: food;
@@ -96,9 +97,9 @@ const {debounceLoading} = useDebounceLoading()
           ))
         )}
 
-        <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
+        <SheetClose className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
           Add foods
-        </button>
+        </SheetClose>
       </div>
       <div className="p-4 h-[30%] bg-[#FFFFFF] rounded-xl flex flex-col gap-5 lg:gap-1">
         <h1 className="text-lg font-semibold lg:text-md">Payment info</h1>

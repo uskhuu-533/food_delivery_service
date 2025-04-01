@@ -3,7 +3,7 @@
 import LoaderAuth from "@/components/LoaderAuth";
 import {  getUserEmail } from "@/utils/request";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   ReactNode,
@@ -32,14 +32,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   queryFn : getUserEmail,
   staleTime: 1000 * 60 * 10,
  })
- useEffect(()=>{
-  if (!user) {
-    router.push('/login')
-  }else{
+ const path = usePathname()
+ useEffect(()=>{  
+  if (!isLoading) {
+    console.log(user);
+    
+  if (user) {
+    if (path === "/category") return 
     router.push('/')
-  }
+  }else{
+    router.push('/login')
+  }}
  // eslint-disable-next-line react-hooks/exhaustive-deps
- },[])
+ },[isLoading])
  if (isLoading) {
   return (
     <LoaderAuth/>

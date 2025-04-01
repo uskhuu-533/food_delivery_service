@@ -4,6 +4,7 @@ import Logo from "../../components/icons/Logo";
 import { useEffect, useState } from "react";
 import OrderList from "../_components/Orders-List";
 import { getOrders } from "@/utils/request";
+import { SheetClose } from "@/components/ui/sheet";
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
@@ -33,9 +34,9 @@ const OrderHistory = () => {
                 and satisfy your cravings!&quot;
               </div>
             </div>
-            <button className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
+            <SheetClose className="w-full border py-2 border-[#EF4444] rounded-full text-[#EF4444]">
               Add food
-            </button>
+            </SheetClose>
           </>
         ) : (
           orderHistory.map((order, index) => (
