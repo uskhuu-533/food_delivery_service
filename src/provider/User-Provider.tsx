@@ -41,6 +41,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (path === "/category") return 
     router.push('/')
   }else{
+    if (path === "/sign-up" || path === "/resetpassword") return
     router.push('/login')
   }}
  // eslint-disable-next-line react-hooks/exhaustive-deps
