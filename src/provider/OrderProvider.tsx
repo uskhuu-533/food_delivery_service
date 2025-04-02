@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-type Order = {
+export type Order = {
   _id: string;
   userData: {
     email: string;

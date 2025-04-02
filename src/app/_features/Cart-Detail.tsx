@@ -62,7 +62,7 @@ const {debounceLoading} = useDebounceLoading()
       toast("Address not found, Add your address", {
         description: "",
         action: {
-          label: "add address",
+          label:<div className="z-50 cursor-pointer">add address</div> ,
           onClick: () => {
             setOpenAddressDialog(true);
           },

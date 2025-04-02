@@ -39,7 +39,7 @@ const SelectLocation = () => {
 
   return (
     <Dialog open={openAddressDialog}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="cursor-pointer">
         <div
           onClick={() => setOpenAddressDialog(true)}
           className="flex py-2 px-3 gap-1 bg-[#FFFFFF] rounded-full text-sm items-center"

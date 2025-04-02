@@ -38,6 +38,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     console.log(user);
     
   if (user) {
+    if (isLoading) return 
     if (path === "/category") return 
     router.push('/')
   }else{

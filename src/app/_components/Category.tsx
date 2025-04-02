@@ -30,7 +30,7 @@ const Category = () => {
             .map((category, index) => (
               <CarouselItem
                 onClick={() => handleCategory(category._id)}
-                className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full"
+                className="pl-4 basis-1/10 bg-[#FFFFFF] px-4 py-1 text-black rounded-full cursor-pointer"
                 key={index}
                 style={
                   categoryId === category._id
